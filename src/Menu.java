@@ -1,8 +1,6 @@
-
+import Exceptions.*;
 
 import java.util.Scanner;
-
-import Exceptions.*;
 
 public class Menu {
     private Colonie colonie;
