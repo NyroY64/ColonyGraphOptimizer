@@ -2,26 +2,37 @@ import Exceptions.*;
 
 import java.util.*;
 
-
-public class Colonie {
+public class Colonie
+{
 	private List<Colon> colons;
-    private Map<Colon, Set<Colon>> relations;
+    private Map<Colon, Set<Colon>> relationsDetestables;
 	
-    public Colonie() {
+    public Colonie()
+    {
     	colons=new ArrayList<Colon>();
-    	relations= new HashMap<Colon, Set<Colon>>();
+    	relationsDetestables= new HashMap<Colon, Set<Colon>>();
     }
     
     public List<Colon> getColons(){
     	return this.colons;
     }
-    public Map<Colon , Set<Colon>> getRelation(){
-    	return this.relations;
-    }
-  
 
-    
-	
+    public void ajouterColon(Colon colon) throws ColonDejaExistantException
+    {
+        for (Colon c : colons) {
+            if (colon.getNom().equals(c.getNom())) {
+                throw new ColonDejaExistantException("Erreur : un colon avec le nom " + c.getNom() + " existe déjà.");
+            }
+        }
+
+        //Add Colon
+        colons.add(colon);
+        relationsDetestables.put(colon, new HashSet<>());//?
+
+        //Update other Colon
+    }
+    public Map<Colon , Set<Colon>> getRelation(){return this.relationsDetestables;}
+
     public void ajouterRelation(String nom1, String nom2) throws ColonInexistantException, RelationDejaExistanteException, RelationAvecSoiMemeException {
         if (nom1.equals(nom2)) {
             throw new RelationAvecSoiMemeException("Erreur : un colon ne peut pas avoir une relation avec lui-même (" + nom1 + ").");
@@ -33,30 +44,14 @@ public class Colonie {
         if (colon1 == null || colon2 == null) {
             throw new ColonInexistantException("Erreur : au moins un des colons n'existe pas (" + nom1 + ", " + nom2 + ").");
         }
-        if (relations.get(colon1).contains(colon2)) {
+        if (relationsDetestables.get(colon1).contains(colon2)) {
             throw new RelationDejaExistanteException("Erreur : la relation entre " + nom1 + " et " + nom2 + " existe déjà.");
         }
-        relations.get(colon1).add(colon2);
-        relations.get(colon2).add(colon1);
+        relationsDetestables.get(colon1).add(colon2);
+        relationsDetestables.get(colon2).add(colon1);
     }
 
-	
 
-	public void ajouterColon(String nom) throws ColonDejaExistantException {
-        for (Colon colon : colons) {
-            if (colon.getNom().equals(nom)) {
-                throw new ColonDejaExistantException("Erreur : un colon avec le nom " + nom + " existe déjà.");
-            }
-        }
-        Colon colon = new Colon(nom);
-        colons.add(colon);
-        relations.put(colon, new HashSet<>());
-    }
-
-	
-	
-	
-	
     public Colon getColon(String nom) throws ColonInexistantException {
         for (Colon colon : colons) {
             if (colon.getNom().equalsIgnoreCase(nom)) {
@@ -65,9 +60,7 @@ public class Colonie {
        }
         throw new ColonInexistantException("Erreur : le colon " + nom + " n'existe pas");  
     }
-    
 
- 
     public boolean toutesLesPreferencesAttribuees() {
         for (Colon colon : colons) {
             if (colon.getPreferences() == null || colon.getPreferences().isEmpty()) {
@@ -89,7 +82,7 @@ public class Colonie {
     }
     
     public Set<Colon> getEnnemis(Colon colon) {
-        Set<Colon> ennemis = relations.get(colon);
+        Set<Colon> ennemis = relationsDetestables.get(colon);
         return (ennemis == null || ennemis.isEmpty()) ? null : ennemis;
     }
     
@@ -132,12 +125,7 @@ public class Colonie {
 		
 	}
     
-    
-    
-    
-    
-    
-    
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

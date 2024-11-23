@@ -35,7 +35,7 @@ public class Menu {
                     while (scanner.hasNextInt()) {
                         colon.addPreference(scanner.nextInt());
                     }
-                    colonie.ajouterColon(colon.getNom());
+                    colonie.ajouterColon(colon);
                     break;
                 case 3:
                     enCours = false;
