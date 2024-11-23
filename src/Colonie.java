@@ -5,7 +5,7 @@ import java.util.*;
 public class Colonie
 {
 	private List<Colon> colons;
-    private Map<Colon, Set<Colon>> relationsDetestables;
+    private Map<Colon, Set<Colon>> relationsDetestables; //Colon & ListOfColonsHated
 	
     public Colonie()
     {
@@ -18,6 +18,7 @@ public class Colonie
     }
 
     public void ajouterColon(Colon colon) throws ColonDejaExistantException
+    //TODO
     {
         for (Colon c : colons) {
             if (colon.getNom().equals(c.getNom())) {
@@ -27,10 +28,18 @@ public class Colonie
 
         //Add Colon
         colons.add(colon);
-        relationsDetestables.put(colon, new HashSet<>());//?
+        relationsDetestables.put(colon, ));
 
         //Update other Colon
+
     }
+
+    public void retireColon(Colon colon)throws Exception
+    //TODO
+    {
+
+    }
+
     public Map<Colon , Set<Colon>> getRelation(){return this.relationsDetestables;}
 
     public void ajouterRelation(String nom1, String nom2) throws ColonInexistantException, RelationDejaExistanteException, RelationAvecSoiMemeException {
@@ -104,12 +113,14 @@ public class Colonie
         return jaloux;
     }
 
-	public void echangerRessources(String nom1, String nom2) throws EchangeAvecSoiMemeException, ColonInexistantException {
-		if(nom1.equals(nom2)) {
+	public void echangerRessources(String colon1, String colon2) throws EchangeAvecSoiMemeException, ColonInexistantException\
+    //TODO
+    {
+		if(colon1.equals(nom2)) {
 			throw new EchangeAvecSoiMemeException("Erreur : un colon ne peut pas echanger d'objet avec lui-même (" + nom1 + ").");
 		}
 		
-		Colon colon1=new Colon(nom1);
+		Colon colon1=new Colon(colon1);
 		Colon colon2=new Colon(nom2);
 		
 		if (colon1 == null || colon2 == null) {
@@ -124,7 +135,12 @@ public class Colonie
 		
 		
 	}
-    
+
+    public void afficherRessourcesDesColons()
+    //TODO
+    {
+
+    }
 
     @Override
     public String toString() {

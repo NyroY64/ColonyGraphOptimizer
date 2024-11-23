@@ -2,8 +2,12 @@ import Exceptions.*;
 
 import java.util.Scanner;
 
+//TODO
 public class Menu {
-    private Colonie colonie;
+    private Expedition expedition;
+
+    private int nombreTOTAL;
+
     private Scanner scanner;
 
     public Menu(Colonie colonie) {
