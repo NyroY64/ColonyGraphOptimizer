@@ -28,7 +28,11 @@ public class Colonie
 
         //Add Colon
         colons.add(colon);
-        relationsDetestables.put(colon, ));
+        relationsDetestables.put(colon,new HashSet<Colon>());
+        for(Map.Entry<Colon, Set<Colon>> everyColon: relationsDetestables.entrySet())
+        {
+            everyColon.getKey().get
+        }
 
         //Update other Colon
 
@@ -116,24 +120,24 @@ public class Colonie
 	public void echangerRessources(String colon1, String colon2) throws EchangeAvecSoiMemeException, ColonInexistantException\
     //TODO
     {
-		if(colon1.equals(nom2)) {
-			throw new EchangeAvecSoiMemeException("Erreur : un colon ne peut pas echanger d'objet avec lui-même (" + nom1 + ").");
-		}
-		
-		Colon colon1=new Colon(colon1);
-		Colon colon2=new Colon(nom2);
-		
-		if (colon1 == null || colon2 == null) {
-            throw new ColonInexistantException("Erreur : au moins un des colons n'existe pas (" + nom1 + ", " + nom2 + ").");
-        }
-		
-		int ressource1 = colon1.getRessource();
-		int ressource2 = colon2.getRessource();
-		
-		colon1.affectationRessource(ressource2);
-		colon2.affectationRessource(ressource1);
-		
-		
+//		if(colon1.equals(nom2)) {
+//			throw new EchangeAvecSoiMemeException("Erreur : un colon ne peut pas echanger d'objet avec lui-même (" + nom1 + ").");
+//		}
+//
+//		Colon colon1=new Colon(colon1);
+//		Colon colon2=new Colon(nom2);
+//
+//		if (colon1 == null || colon2 == null) {
+//            throw new ColonInexistantException("Erreur : au moins un des colons n'existe pas (" + nom1 + ", " + nom2 + ").");
+//        }
+//
+//		int ressource1 = colon1.getRessource();
+//		int ressource2 = colon2.getRessource();
+//
+//		colon1.affectationRessource(ressource2);
+//		colon2.affectationRessource(ressource1);
+//
+//
 	}
 
     public void afficherRessourcesDesColons()
