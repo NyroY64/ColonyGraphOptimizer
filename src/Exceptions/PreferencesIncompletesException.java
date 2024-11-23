@@ -1,4 +1,4 @@
-package up.mi.paa.partie1.Exceptions;
+package Exceptions;
 
 public class PreferencesIncompletesException extends Exception {
 	public PreferencesIncompletesException(String message) {

@@ -1,8 +1,8 @@
-package up.mi.paa.partie1;
+
 
 import java.util.Scanner;
 
-import up.mi.paa.partie1.Exceptions.*;
+import Exceptions.*;
 
 public class Menu {
     private Colonie colonie;

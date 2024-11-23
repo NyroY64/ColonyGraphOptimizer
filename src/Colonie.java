@@ -1,6 +1,6 @@
-package up.mi.paa.partie1;
 
-import up.mi.paa.partie1.Exceptions.*;
+
+import Exceptions.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;

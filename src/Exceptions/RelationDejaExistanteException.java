@@ -1,4 +1,4 @@
-package up.mi.paa.partie1.Exceptions;
+package Exceptions;
 
 public class RelationDejaExistanteException extends Exception {
 	public RelationDejaExistanteException(String message) {
