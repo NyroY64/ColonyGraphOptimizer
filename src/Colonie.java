@@ -79,7 +79,7 @@ public class Colonie {
     
     public void verifierPreferencesCompletes(int nombreDeRessources) throws PreferencesIncompletesException {
         for (Colon colon : colons) {
-            List<Integer> preferences = colon.getPreferences();
+            LinkedHashSet<Integer> preferences = colon.getPreferences();
             if (preferences == null || preferences.size() != nombreDeRessources) {
                 throw new PreferencesIncompletesException(
                         "Erreur : le colon " + colon.getNom() + " n'a pas une liste de préférences complète."
@@ -101,8 +101,8 @@ public class Colonie {
 
             for (Colon ennemi : ennemis) {
                 if (ennemi != null
-                        && colon.getPreferences().indexOf(ennemi.getRessourceAttribuee())
-                        < colon.getPreferences().indexOf(colon.getRessourceAttribuee())) {
+                        && colon.getPreferenceAT(ennemi.getRessource())
+                        < colon.getPreferenceAT(colon.getRessource())) {
                     jaloux++;
                     break;
                 }
@@ -110,7 +110,7 @@ public class Colonie {
         }
         return jaloux;
     }
-    
+
 	public void echangerRessources(String nom1, String nom2) throws EchangeAvecSoiMemeException, ColonInexistantException {
 		if(nom1.equals(nom2)) {
 			throw new EchangeAvecSoiMemeException("Erreur : un colon ne peut pas echanger d'objet avec lui-même (" + nom1 + ").");
@@ -123,11 +123,11 @@ public class Colonie {
             throw new ColonInexistantException("Erreur : au moins un des colons n'existe pas (" + nom1 + ", " + nom2 + ").");
         }
 		
-		int ressource1 = colon1.getRessourceAttribuee();
-		int ressource2=colon2.getRessourceAttribuee();
+		int ressource1 = colon1.getRessource();
+		int ressource2 = colon2.getRessource();
 		
-		colon1.setRessourceAttribuee(ressource2);
-		colon2.setRessourceAttribuee(ressource1);
+		colon1.affectationRessource(ressource2);
+		colon2.affectationRessource(ressource1);
 		
 		
 	}
@@ -143,14 +143,14 @@ public class Colonie {
         StringBuilder result = new StringBuilder();
         for (Colon colon : colons) {
             result.append("Colon ").append(colon.getNom()).append(" (Ressource allouée : ");
-            if (colon.getRessourceAttribuee() == null) {
+            if (colon.getRessource() == null) {
                 result.append("pas encore allouée");
             } else {
-                result.append(colon.getRessourceAttribuee());
+                result.append(colon.getRessource());
             }
             result.append(")");
             result.append(", Préférences : ");
-            List<Integer> preferences = colon.getPreferences();
+            LinkedHashSet<Integer> preferences = colon.getPreferences();
             if (preferences == null || preferences.isEmpty()) {
                 result.append("aucune préférence");
             } else {
@@ -175,9 +175,9 @@ public class Colonie {
             Colon colonJalouxDe = null;
             if (ennemis != null) {
                 for (Colon ennemi : ennemis) {
-                    if (ennemi.getRessourceAttribuee() != null &&
-                            colon.getPreferences().indexOf(ennemi.getRessourceAttribuee())
-                                    < colon.getPreferences().indexOf(colon.getRessourceAttribuee())) {
+                    if (ennemi.getRessource() != null &&
+                            colon.getPreferenceAT(ennemi.getRessource())
+                                    < colon.getPreferenceAT(colon.getRessource())) {
                         colonJalouxDe = ennemi;
                         break;
                     }

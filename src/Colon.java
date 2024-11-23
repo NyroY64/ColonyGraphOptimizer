@@ -1,39 +1,59 @@
+import java.util.LinkedHashSet;
 
-
-import java.util.List;
-
-public class Colon {
+public class Colon
+{
 	private String nom;
-	private List<Integer> preferences;
+	private LinkedHashSet<Integer> preferences;
 	private Integer ressourceAttribuee;
 
-	public Colon(String nom) {
+	public Colon(String nom)
+	{
 		this.nom=nom;
+		preferences = new LinkedHashSet<>();
+		ressourceAttribuee=0;
 	}
 
-	
-	public List<Integer> getPreferences() {
+	public String getNom() {return this.nom;}
+	public LinkedHashSet<Integer> getPreferences() {
 		return preferences;
 	}
-	  
-	public void ajouterPreference(int nextInt) {
-		// TODO Auto-generated method stub
+	public int getPreferenceAT(int n)
+	{
+		if (n < 0 || n >= preferences.size()) {
+			throw new IndexOutOfBoundsException("Invalid index: " + n);
+		}
+
+		var iterator = preferences.iterator();
+		int currentIndex = 0;
+
+		while (iterator.hasNext()) {
+			int currentElement = iterator.next();
+			if (currentIndex == n) {
+				return currentElement;
+			}
+			currentIndex++;
+		}
+
+		// This line should never be reached due to the index check above.
+		throw new IllegalStateException("Element not found");
 	}
+	public void addPreference(int pref)
+	{
+		preferences.add(pref);
+	}
+	public Integer getRessource() {
+		return ressourceAttribuee;
+	}
+	public void affectationRessource(Integer ressourceAttribuee) {this.ressourceAttribuee = ressourceAttribuee;}
 
 
-	public String getNom() {
-		
-		return this.nom;
-	}
+
+
+
 
 
 	
-	 public Integer getRessourceAttribuee() {
-	        return ressourceAttribuee;
-	    }
 
-	 public void setRessourceAttribuee(Integer ressourceAttribuee) {
-		 this.ressourceAttribuee = ressourceAttribuee;
-	 }
+
 
 }

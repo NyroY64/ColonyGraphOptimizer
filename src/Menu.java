@@ -33,7 +33,7 @@ public class Menu {
                     String nom = scanner.next();
                     Colon colon = new Colon(nom);
                     while (scanner.hasNextInt()) {
-                        colon.ajouterPreference(scanner.nextInt());
+                        colon.addPreference(scanner.nextInt());
                     }
                     colonie.ajouterColon(colon.getNom());
                     break;
