@@ -14,6 +14,13 @@ public class Colon
 		ressourceAttribuee=0;
 	}
 
+	public Colon(String nom, LinkedHashSet<Integer> preferences)
+	{
+		this.nom=nom;
+		this.preferences = preferences;
+		ressourceAttribuee=0;
+	}
+
 	public String getNom() {return this.nom;}
 	public LinkedHashSet<Integer> getPreferences() {
 		return preferences;
