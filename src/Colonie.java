@@ -1,33 +1,51 @@
-
-
 import Exceptions.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
+import java.util.*;
 
-public class Colonie {
+public class Colonie
+{
 	private List<Colon> colons;
-    private Map<Colon, Set<Colon>> relations;
+    private Map<Colon, Set<Colon>> relationsDetestables; //Colon & ListOfColonsHated
 	
-    public Colonie() {
+    public Colonie()
+    {
     	colons=new ArrayList<Colon>();
-    	relations= new HashMap<Colon, Set<Colon>>();
+    	relationsDetestables= new HashMap<Colon, Set<Colon>>();
     }
     
     public List<Colon> getColons(){
     	return this.colons;
     }
-    public Map<Colon , Set<Colon>> getRelation(){
-    	return this.relations;
-    }
-  
 
-    
-	
+    public void ajouterColon(Colon colon) throws ColonDejaExistantException
+    //TODO
+    {
+        for (Colon c : colons) {
+            if (colon.getNom().equals(c.getNom())) {
+                throw new ColonDejaExistantException("Erreur : un colon avec le nom " + c.getNom() + " existe déjà.");
+            }
+        }
+
+        //Add Colon
+        colons.add(colon);
+        relationsDetestables.put(colon,new HashSet<Colon>());
+        for(Map.Entry<Colon, Set<Colon>> everyColon: relationsDetestables.entrySet())
+        {
+            everyColon.getKey().get
+        }
+
+        //Update other Colon
+
+    }
+
+    public void retireColon(Colon colon)throws Exception
+    //TODO
+    {
+
+    }
+
+    public Map<Colon , Set<Colon>> getRelation(){return this.relationsDetestables;}
+
     public void ajouterRelation(String nom1, String nom2) throws ColonInexistantException, RelationDejaExistanteException, RelationAvecSoiMemeException {
         if (nom1.equals(nom2)) {
             throw new RelationAvecSoiMemeException("Erreur : un colon ne peut pas avoir une relation avec lui-même (" + nom1 + ").");
@@ -39,30 +57,14 @@ public class Colonie {
         if (colon1 == null || colon2 == null) {
             throw new ColonInexistantException("Erreur : au moins un des colons n'existe pas (" + nom1 + ", " + nom2 + ").");
         }
-        if (relations.get(colon1).contains(colon2)) {
+        if (relationsDetestables.get(colon1).contains(colon2)) {
             throw new RelationDejaExistanteException("Erreur : la relation entre " + nom1 + " et " + nom2 + " existe déjà.");
         }
-        relations.get(colon1).add(colon2);
-        relations.get(colon2).add(colon1);
+        relationsDetestables.get(colon1).add(colon2);
+        relationsDetestables.get(colon2).add(colon1);
     }
 
-	
 
-	public void ajouterColon(String nom) throws ColonDejaExistantException {
-        for (Colon colon : colons) {
-            if (colon.getNom().equals(nom)) {
-                throw new ColonDejaExistantException("Erreur : un colon avec le nom " + nom + " existe déjà.");
-            }
-        }
-        Colon colon = new Colon(nom);
-        colons.add(colon);
-        relations.put(colon, new HashSet<>());
-    }
-
-	
-	
-	
-	
     public Colon getColon(String nom) throws ColonInexistantException {
         for (Colon colon : colons) {
             if (colon.getNom().equalsIgnoreCase(nom)) {
@@ -71,9 +73,7 @@ public class Colonie {
        }
         throw new ColonInexistantException("Erreur : le colon " + nom + " n'existe pas");  
     }
-    
 
- 
     public boolean toutesLesPreferencesAttribuees() {
         for (Colon colon : colons) {
             if (colon.getPreferences() == null || colon.getPreferences().isEmpty()) {
@@ -85,7 +85,7 @@ public class Colonie {
     
     public void verifierPreferencesCompletes(int nombreDeRessources) throws PreferencesIncompletesException {
         for (Colon colon : colons) {
-            List<Integer> preferences = colon.getPreferences();
+            LinkedHashSet<Integer> preferences = colon.getPreferences();
             if (preferences == null || preferences.size() != nombreDeRessources) {
                 throw new PreferencesIncompletesException(
                         "Erreur : le colon " + colon.getNom() + " n'a pas une liste de préférences complète."
@@ -95,7 +95,7 @@ public class Colonie {
     }
     
     public Set<Colon> getEnnemis(Colon colon) {
-        Set<Colon> ennemis = relations.get(colon);
+        Set<Colon> ennemis = relationsDetestables.get(colon);
         return (ennemis == null || ennemis.isEmpty()) ? null : ennemis;
     }
     
@@ -107,8 +107,8 @@ public class Colonie {
 
             for (Colon ennemi : ennemis) {
                 if (ennemi != null
-                        && colon.getPreferences().indexOf(ennemi.getRessourceAttribuee())
-                        < colon.getPreferences().indexOf(colon.getRessourceAttribuee())) {
+                        && colon.getPreferenceAT(ennemi.getRessource())
+                        < colon.getPreferenceAT(colon.getRessource())) {
                     jaloux++;
                     break;
                 }
@@ -116,47 +116,49 @@ public class Colonie {
         }
         return jaloux;
     }
-    
-	public void echangerRessources(String nom1, String nom2) throws EchangeAvecSoiMemeException, ColonInexistantException {
-		if(nom1.equals(nom2)) {
-			throw new EchangeAvecSoiMemeException("Erreur : un colon ne peut pas echanger d'objet avec lui-même (" + nom1 + ").");
-		}
-		
-		Colon colon1=new Colon(nom1);
-		Colon colon2=new Colon(nom2);
-		
-		if (colon1 == null || colon2 == null) {
-            throw new ColonInexistantException("Erreur : au moins un des colons n'existe pas (" + nom1 + ", " + nom2 + ").");
-        }
-		
-		int ressource1 = colon1.getRessourceAttribuee();
-		int ressource2=colon2.getRessourceAttribuee();
-		
-		colon1.setRessourceAttribuee(ressource2);
-		colon2.setRessourceAttribuee(ressource1);
-		
-		
+
+	public void echangerRessources(String colon1, String colon2) throws EchangeAvecSoiMemeException, ColonInexistantException\
+    //TODO
+    {
+//		if(colon1.equals(nom2)) {
+//			throw new EchangeAvecSoiMemeException("Erreur : un colon ne peut pas echanger d'objet avec lui-même (" + nom1 + ").");
+//		}
+//
+//		Colon colon1=new Colon(colon1);
+//		Colon colon2=new Colon(nom2);
+//
+//		if (colon1 == null || colon2 == null) {
+//            throw new ColonInexistantException("Erreur : au moins un des colons n'existe pas (" + nom1 + ", " + nom2 + ").");
+//        }
+//
+//		int ressource1 = colon1.getRessource();
+//		int ressource2 = colon2.getRessource();
+//
+//		colon1.affectationRessource(ressource2);
+//		colon2.affectationRessource(ressource1);
+//
+//
 	}
-    
-    
-    
-    
-    
-    
-    
+
+    public void afficherRessourcesDesColons()
+    //TODO
+    {
+
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (Colon colon : colons) {
             result.append("Colon ").append(colon.getNom()).append(" (Ressource allouée : ");
-            if (colon.getRessourceAttribuee() == null) {
+            if (colon.getRessource() == null) {
                 result.append("pas encore allouée");
             } else {
-                result.append(colon.getRessourceAttribuee());
+                result.append(colon.getRessource());
             }
             result.append(")");
             result.append(", Préférences : ");
-            List<Integer> preferences = colon.getPreferences();
+            LinkedHashSet<Integer> preferences = colon.getPreferences();
             if (preferences == null || preferences.isEmpty()) {
                 result.append("aucune préférence");
             } else {
@@ -181,9 +183,9 @@ public class Colonie {
             Colon colonJalouxDe = null;
             if (ennemis != null) {
                 for (Colon ennemi : ennemis) {
-                    if (ennemi.getRessourceAttribuee() != null &&
-                            colon.getPreferences().indexOf(ennemi.getRessourceAttribuee())
-                                    < colon.getPreferences().indexOf(colon.getRessourceAttribuee())) {
+                    if (ennemi.getRessource() != null &&
+                            colon.getPreferenceAT(ennemi.getRessource())
+                                    < colon.getPreferenceAT(colon.getRessource())) {
                         colonJalouxDe = ennemi;
                         break;
                     }

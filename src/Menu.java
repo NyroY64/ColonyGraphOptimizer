@@ -1,15 +1,16 @@
-
+import Exceptions.*;
 
 import java.util.Scanner;
 
-import Exceptions.*;
-
+//TODO
 public class Menu {
-    private Colonie colonie;
+    private Expedition expedition;
+
+    private int nombreTOTAL;
+
     private Scanner scanner;
 
     public Menu(Colonie colonie) {
-        this.colonie = colonie;
         this.scanner = new Scanner(System.in);
     }
 
@@ -28,16 +29,16 @@ public class Menu {
                     System.out.print("Entrer les noms des deux colons (ex : A B) : ");
                     String colon1 = scanner.next();
                     String colon2 = scanner.next();
-                    colonie.ajouterRelation(colon1,colon2);
+                    //colonie.ajouterRelation(colon1,colon2);
                     break;
                 case 2:
                     System.out.print("Entrer le nom du colon et ses préférences (ex : A 1 2 3) : ");
                     String nom = scanner.next();
                     Colon colon = new Colon(nom);
                     while (scanner.hasNextInt()) {
-                        colon.ajouterPreference(scanner.nextInt());
+                        colon.addPreference(scanner.nextInt());
                     }
-                    colonie.ajouterColon(colon.getNom());
+                    //colonie.ajouterColon(colon);
                     break;
                 case 3:
                     enCours = false;
@@ -63,11 +64,11 @@ public class Menu {
                     System.out.print("Entrer les noms des deux colons à échanger : ");
                     String nom1 = scanner.next();
                     String nom2 = scanner.next();
-                    colonie.echangerRessources(nom1, nom2);
+                    //colonie.echangerRessources(nom1, nom2);
                     break;
                 case 2:
-                    int cout = colonie.calculerColonsJaloux();
-                    System.out.println("Nombre de colons jaloux : " + cout);
+                    //int cout = colonie.calculerColonsJaloux();
+                    System.out.println("Nombre de colons jaloux : " + "cout");
                     break;
                 case 3:
                     enCours = false;
