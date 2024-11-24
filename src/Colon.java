@@ -1,5 +1,6 @@
 import java.util.LinkedHashSet;
 
+
 public class Colon
 {
 	private String nom;

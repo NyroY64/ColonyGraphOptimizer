@@ -38,7 +38,7 @@ public class Colonie
 
     }
 
-    public void retireColon(Colon colon)throws Exception
+    public void retireColon(Colon colon)throws ColonNonExistantException
     //TODO
     {
 
@@ -117,7 +117,7 @@ public class Colonie
         return jaloux;
     }
 
-	public void echangerRessources(String colon1, String colon2) throws EchangeAvecSoiMemeException, ColonInexistantException\
+	public void echangerRessources(String colon1, String colon2) throws EchangeAvecSoiMemeException, ColonInexistantException
     //TODO
     {
 //		if(colon1.equals(nom2)) {
