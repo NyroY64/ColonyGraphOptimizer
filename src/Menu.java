@@ -6,12 +6,13 @@ import java.util.Scanner;
 //TODO
 public class Menu {
     private Expedition expedition;
-
     private int nombreTOTAL;
 
     private Scanner scanner;
 
-    public Menu(Colonie colonie) {
+    public Menu(Colonie colonie)
+    {
+
         this.scanner = new Scanner(System.in);
     }
 
@@ -39,7 +40,7 @@ public class Menu {
                     while (scanner.hasNextInt()) {
                         colon.addPreference(scanner.nextInt());
                     }
-                    //colonie.ajouterColon(colon);
+                    colonie.ajouterColon(colon);
                     break;
                 case 3:
                     enCours = false;
