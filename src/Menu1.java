@@ -6,4 +6,8 @@ public class Menu1 extends Menu
     {
         super(colonie);
     }
+
+    public void ajouteRelationColon(Colon c1, Colon c2){
+        
+    }
 }

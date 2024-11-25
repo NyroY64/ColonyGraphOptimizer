@@ -67,6 +67,7 @@ public class Colonie
 
     public Map<Colon , Set<Colon>> getRelations(){return this.relationsDetestables;}
 
+
     public void ajouterRelation(Colon colon1, ArrayList<Colon> relationsList) throws ColonInexistantException, RelationDejaExistanteException, RelationAvecSoiMemeException
     {
 
@@ -158,7 +159,7 @@ public class Colonie
             }
         }
         return jaloux;
-    }
+    }    
 
 	public void echangerRessources(Colon colon1, Colon colon2) throws EchangeAvecSoiMemeException, ColonInexistantException
     {
