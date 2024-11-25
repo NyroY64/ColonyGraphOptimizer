@@ -2,6 +2,8 @@ import Exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Scanner;
+
 
 
 public class Menu {
@@ -57,7 +59,7 @@ public class Menu {
     }
 
     
-    public void afficherMenuAffectation() throws EchangeAvecSoiMemeException, ColonInexistantException {
+    public void afficherMenuAffectation() {
         System.out.println("Gestion des affectations de ressources :");
         boolean enCours = true;
         while (enCours) {
@@ -66,25 +68,29 @@ public class Menu {
             System.out.println("3) Fin");
             int choix = scanner.nextInt();
 
-            switch (choix) {
-                case 1:
-                    System.out.print("Entrer les noms des deux colons à échanger : ");
-                    String nom1 = scanner.next();
-                    String nom2 = scanner.next();
-                    Colon c1 =new Colon(nom1);
-                    Colon c2 =new Colon(nom2);
+            try {
+                switch (choix) {
+                    case 1:
+                        System.out.print("Entrer les noms des deux colons à échanger : ");
+                        String nom1 = scanner.next();
+                        String nom2 = scanner.next();
+                        Colon c1 = new Colon(nom1);
+                        Colon c2 = new Colon(nom2);
 
-                    colonie.echangerRessources(c1, c2);
-                    break;
-                case 2:
-                    int cout = colonie.calculerColonsJaloux();  
-                    System.out.println("Nombre de colons jaloux : " + cout);
-                    break;
-                case 3:
-                    enCours = false;
-                    break;
-                default:
-                    System.out.println("Option invalide. Réessayez.");
+                        colonie.echangerRessources(c1, c2);
+                        break;
+                    case 2:
+                        int cout = colonie.calculerColonsJaloux();
+                        System.out.println("Nombre de colons jaloux : " + cout);
+                        break;
+                    case 3:
+                        enCours = false;
+                        break;
+                    default:
+                        System.out.println("Option invalide. Réessayez.");
+                }
+             } catch (Exception e) {
+                System.out.println("Erreur inattendue : " + e.getMessage());
             }
         }
     }
