@@ -1,0 +1,22 @@
+Ce fichier va nous servir a communiquer et detailler nos avances/problemes/sugestions etc..
+
+
+Damien:
+
+Laissez les Test dans le main c'est plus rapide et simple pour compiler. Faudra juste pas oublier a la fin de les mettre dans un dossier a eux.
+Le cout on avait dit dans Expedition mais a voir si c'est pertinant.
+
+Menu devrait juste contenir de quoi appeller Menu1 ou Menu2 ou MenuLoadTXT.
+
+Suivre l'UML.
+
+Youcef:
+-corriger les bug dans colonie
+-continuer les class que t'a mis en commentaire
+-reaaliser les todo suivant 
+    menue 
+    menue1
+    menue2
+
+Mohamed:
+
