@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class Menu {
     private Expedition expedition;
-
     private int nombreTOTAL;
 
     private Scanner scanner;
@@ -47,6 +46,7 @@ public class Menu {
                     while (scanner.hasNextInt()) {
                         colon.addPreference(scanner.nextInt());
                     }
+                    colonie.ajouterColon(colon);
                     colonie.ajouterColon(colon);
                     break;
                 case 3:

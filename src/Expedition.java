@@ -59,4 +59,12 @@ public class Expedition
     {
         return 0;
     }
+
+    public String HashResult(Colonie coco)
+    {
+        StringBuffer hashResult = new StringBuffer();
+
+
+        return hashResult.toString();
+    }
 }
