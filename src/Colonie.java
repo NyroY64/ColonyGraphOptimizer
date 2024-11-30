@@ -4,98 +4,74 @@ import java.util.*;
 
 public class Colonie
 {
-	private List<Colon> colons;
-    private Map<Colon, Set<Colon>> relationsDetestables; //Colon & ListOfColonsHated
-	
+	private final List<Colon> colons;
+
     public Colonie()
     {
     	colons=new ArrayList<Colon>();
-    	relationsDetestables= new HashMap<Colon, Set<Colon>>();
     }
     public Colonie(List<Colon> colons)
     {
         this.colons=colons;
-        relationsDetestables= new HashMap<Colon, Set<Colon>>();
     }
     
     public List<Colon> getColons(){
     	return this.colons;
     }
 
-    public void ajouterColon(Colon currentColon) throws ColonDejaExistantException
+    public void ajouterColon(Colon currentColon) throws Exception
     //Symetrie
     {
+        //Execption
         for (Colon c : colons)
         {
-            if (currentColon.getNom().equals(c.getNom())) {
+            if (currentColon.getNom().equals(c.getNom()))
+            {
                 throw new ColonDejaExistantException("Erreur : un colon avec le nom " + c.getNom() + " existe déjà.");
             }
         }
 
-        //Add Colon and add everyone who hates him in his list
+        //Add Colon
         colons.add(currentColon);
-        relationsDetestables.put(currentColon,new HashSet<Colon>());
-        for(Map.Entry<Colon, Set<Colon>> everyColon: relationsDetestables.entrySet())
+
+        // Update CurrentColon Hatelist
+        for (Colon everycolon : colons)
         {
-            Colon otherColon = everyColon.getKey();
-            Set<Colon> hatelist = everyColon.getValue();
-            if(hatelist.contains(currentColon))
+            if (everycolon.getRelationsDetestables().contains(currentColon))
             {
-                relationsDetestables.get(currentColon).add(otherColon);
+                currentColon.addRelation(everycolon);
+            }
+
+            //Update other Colon
+            if (currentColon.getRelationsDetestables().contains(everycolon))
+            {
+                everycolon.addRelation(currentColon);
             }
         }
-
-        //Update other Colon
-        Set<Colon> currentColonHateList = relationsDetestables.get(currentColon);
-        for(Colon hatedColon : currentColonHateList)
-        {
-            relationsDetestables.get(hatedColon).add(currentColon);
-        }
-
     }
 
-    public void retireColon(Colon colon) throws ColonNonExistantException
+    public void retireColon(Colon colon) throws Exception
     {
-        relationsDetestables.remove(colon);
-        for (Set<Colon> hateList : relationsDetestables.values())
+        if (!colons.contains(colon))
         {
-            hateList.remove(colon);
+            throw new ColonNonExistantException("Erreur : le colon " + colon.getNom() + " n'existe pas.");
         }
+
+        // Retirer le colon de la liste des colons
         colons.remove(colon);
-    }
 
-
-    public Map<Colon , Set<Colon>> getRelations(){return this.relationsDetestables;}
-
-
-    public void ajouterRelation(Colon colon1, ArrayList<Colon> relationsList) throws ColonInexistantException, RelationDejaExistanteException, RelationAvecSoiMemeException
-    {
-
-        if(!relationsList.contains(colon1))
+        // Retirer le colon des listes de relations détestables de tous les autres colons
+        for (Colon existingColon : colons)
         {
-            throw new ColonInexistantException("Erreur: Le colon n'existe pas.");
+            existingColon.removeRelation(colon);
         }
-        for(Colon c:relationsList)
-        {
-            //Add Colon
-            if (colon1==c)
-            {
-                throw new RelationAvecSoiMemeException("Erreur : un colon ne peut pas avoir une relation avec lui-même (" + colon1.getNom() + ").");
-            }
-            if (relationsDetestables.get(colon1).contains(c))
-            {
-                throw new RelationDejaExistanteException("Erreur : la relation entre " + colon1.getNom() + " et " + colon1.getNom() + " existe déjà.");
-            }
-            //add ton main
-            relationsDetestables.get(colon1).add(c);
-            //add to hated
-            relationsDetestables.get(c).add(colon1);
-        }
+
     }
 
     public Colon getColonObjet(String nom) throws ColonInexistantException
     {
-        for (Colon colon : colons) {
+        for (Colon colon : colons)
+        {
             if (colon.getNom().equalsIgnoreCase(nom)) {
                 return colon;
             }
@@ -122,8 +98,8 @@ public class Colonie
         }
         return true;
     }
-    
-    public void verifierPreferencesCompletes(int nombreDeRessources) throws PreferencesIncompletesException
+
+    public int verifierPreferencesCompletes(int nombreDeRessources) throws PreferencesIncompletesException
     {
         for (Colon colon : colons) {
             LinkedHashSet<Integer> preferences = colon.getPreferences();
@@ -133,20 +109,16 @@ public class Colonie
                 );
             }
         }
+        return 0;
     }
-    
-    public Set<Colon> getEnnemis(Colon colon)
-    {
-        Set<Colon> ennemis = relationsDetestables.get(colon);
-        return (ennemis == null || ennemis.isEmpty()) ? null : ennemis;
-    }
-    
-    public int calculerColonsJaloux()
-    //TODO
+
+    public int cout()
+    //TODO NOT WORKING
     {
         int jaloux = 0;
-        for (Colon colon : getColons()) {
-            Set<Colon> ennemis = getEnnemis(colon);
+        for (Colon colon : getColons())
+        {
+            Set<Colon> ennemis = colon.getRelationsDetestables();
             if (ennemis == null) continue;
 
             for (Colon ennemi : ennemis) {
@@ -159,9 +131,9 @@ public class Colonie
             }
         }
         return jaloux;
-    }    
+    }
 
-	public void echangerRessources(Colon colon1, Colon colon2) throws EchangeAvecSoiMemeException, ColonInexistantException
+    public void echangerRessources(Colon colon1, Colon colon2) throws EchangeAvecSoiMemeException, ColonInexistantException
     {
 		if(colon1 == colon2)
         {
@@ -182,13 +154,16 @@ public class Colonie
 
     public String afficherRessourcesDesColons()
     {
-        StringBuffer Result = new StringBuffer();
-        StringBuffer temp = new StringBuffer();
+        StringBuilder Result = new StringBuilder();
+        StringBuilder temp = new StringBuilder();
         for(Colon c:colons)
         {
-            temp.append(c.getNom()+" Got "+c.getRessource()+" ressource.");
+            temp.append(c.getNom())
+                    .append(" Got ")
+                    .append(c.getRessource())
+                    .append(" ressource.");
             System.out.println(temp);
-            Result.append(temp+"\n");
+            Result.append(temp).append("\n");
             temp.setLength(0);
         }
         return Result.toString();
@@ -196,44 +171,14 @@ public class Colonie
 
     @Override
     public String toString()
-    //TODO
-    // To fix: Display of HateList
     {
         StringBuilder result = new StringBuilder();
-        for (Colon colon : colons) {
-            result.append("Colon ").append(colon.getNom()).append(" (Ressource allouée : ");
-            if (colon.getRessource() == null) {
-                result.append("pas encore allouée");
-            } else {
-                result.append(colon.getRessource());
-            }
-            result.append(")");
-            result.append(", Préférences : ");
-            LinkedHashSet<Integer> preferences = colon.getPreferences();
-            if (preferences == null || preferences.isEmpty()) {
-                result.append("aucune préférence");
-            } else {
-                result.append(preferences);
-            }
-            Set<Colon> ennemis = getEnnemis(colon);
-            result.append(", Ennemis : ");
-            if (ennemis == null || ennemis.isEmpty()) {
-                result.append("aucun");
-            } else {
-                result.append("{");
-                int i = 0;
-                for (Colon ennemi : ennemis) {
-                    result.append(ennemi.getNom());
-                    if (i < ennemis.size() - 1) {
-                        result.append(", ");
-                    }
-                    i++;
-                }
-                result.append("}");
-            }
+        for (Colon colon : colons)
+        {
+            result.append(colon.toString());
             Colon colonJalouxDe = null;
-            if (ennemis != null) {
-                for (Colon ennemi : ennemis) {
+            if (colon.getRelationsDetestables() != null) {
+                for (Colon ennemi : colon.getRelationsDetestables()) {
                     if (ennemi.getRessource() != null &&
                             colon.getPreferenceAT(ennemi.getRessource())
                                     < colon.getPreferenceAT(colon.getRessource())) {
@@ -242,7 +187,8 @@ public class Colonie
                     }
                 }
             }
-            if (colonJalouxDe != null) {
+            if (colonJalouxDe != null)
+            {
                 result.append(" et est jaloux de ").append(colonJalouxDe.getNom());
             } else {
                 result.append(" et n'est jaloux de personne");
@@ -251,16 +197,5 @@ public class Colonie
         }
         return result.toString();
     }
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
 }

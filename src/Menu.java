@@ -17,7 +17,8 @@ public class Menu {
         this.colonie=colonie;
     }
 
-    public void afficherMenuConfiguration() throws ColonDejaExistantException, ColonInexistantException, RelationDejaExistanteException, RelationAvecSoiMemeException {
+    public void afficherMenuConfiguration() throws Exception
+    {
         System.out.println("Configuration de la colonie :");
         boolean enCours = true;
         while (enCours) {
@@ -37,7 +38,7 @@ public class Menu {
                     
                     ArrayList<Colon> colons = new ArrayList<>();
                     colons.add(c2);
-                    colonie.ajouterRelation(c1, colons);
+                    c1.ajouterRelations(colons);
                     break;
                 case 2:
                     System.out.print("Entrer le nom du colon et ses préférences (ex : A 1 2 3) : ");
@@ -80,7 +81,7 @@ public class Menu {
                         colonie.echangerRessources(c1, c2);
                         break;
                     case 2:
-                        int cout = colonie.calculerColonsJaloux();
+                        int cout = colonie.cout();
                         System.out.println("Nombre de colons jaloux : " + cout);
                         break;
                     case 3:

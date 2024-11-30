@@ -1,5 +1,7 @@
 Ce fichier va nous servir a communiquer et detailler nos avances/problemes/sugestions etc..
 
+JAVA 17
+
 
 Damien:
 
@@ -10,7 +12,11 @@ Menu devrait juste contenir de quoi appeller Menu1 ou Menu2 ou MenuLoadTXT.
 
 Suivre l'UML.
 
-Colon a la liste destes[REFRACTOR TOTAL]
+Colon a la liste destes[REFRACTOR TOTAL] {DONE}
+
+Colon&Colonie done, cout() to fix ONLY
+
+Algo to Implement in Expedition.
 
 Youcef:
 -corriger les bug dans colonie
