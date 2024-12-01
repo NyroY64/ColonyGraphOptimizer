@@ -94,16 +94,16 @@ public class Expedition
     public int Importation(String path) throws Exception
     //TODO
     {
-        List<String> keyClasses = Arrays.asList("Colon","ressource","deteste","preferences");
+        List<String> keyClasses = Arrays.asList("colon","ressource","deteste","preferences");
         List<String> linesOfFiles = Files.readAllLines(Paths.get(path));
         Colonie newColonie = new Colonie();
         Ressource newRessource = new Ressource();
 
         //REGEX
-        String colonRegex = "^colon(([a-z0-9]+)).$";
-        String ressourceRegex = "^ressource(([a-z0-9]+)).$";
-        String detesteRegex = "^deteste(([a-z0-9]+)(?:,([a-z0-9_]+))+).$";
-        String preferencesRegex = "^preferences(([a-z0-9]+)(?:,([a-z0-9_]+))+).$";
+        String colonRegex = "^colon\\(([a-z0-9_]+)\\).$";
+        String ressourceRegex = "^ressource\\(([a-z0-9_]+)\\).$";
+        String detesteRegex = "^deteste\\(([a-z0-9_]+)(?:,([a-z0-9_]+))+\\).$";
+        String preferencesRegex = "^preferences\\(([a-z0-9_]+)(?:,([a-z0-9_]+))+\\).$";
 
         Pattern colonPatern = Pattern.compile(colonRegex);
         Pattern ressourcePatern = Pattern.compile(ressourceRegex);
@@ -113,6 +113,10 @@ public class Expedition
         for(int i=0;i<linesOfFiles.size();i++)
         {
             // Colon Case
+            String line = linesOfFiles.get(i);
+            String keytest = keyClasses.get(0);
+            Boolean t = linesOfFiles.get(i).startsWith(keyClasses.get(0));
+
             if(linesOfFiles.get(i).startsWith(keyClasses.get(0)))
             {
                 Matcher matcher = colonPatern.matcher(linesOfFiles.get(i));
@@ -140,7 +144,7 @@ public class Expedition
                 }
             }
 
-            //Preferences Case
+            //Preferences Case //TODO FIX
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(3)))
             {
                 Matcher matcher = preferencesPatern.matcher(linesOfFiles.get(i));
