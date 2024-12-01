@@ -55,6 +55,21 @@ public class RessourceTest
             Assertions.assertEquals(1564, ressource.getRessource(3));
             Assertions.assertEquals(58, ressource.getRessource(ressource.size() - 1));
         }
+
+        @Test
+        void Testcontains()
+        {
+            ressource = new Ressource();
+            ressource.addRessource(1);
+            ressource.addRessource(6);
+            ressource.addRessource(5);
+            ressource.addRessource(1564);
+
+            Assertions.assertTrue(ressource.contains(1));
+            Assertions.assertTrue(ressource.contains(6));
+            Assertions.assertTrue(ressource.contains(5));
+            Assertions.assertTrue(ressource.contains(1564));
+        }
     }
 
     @Nested

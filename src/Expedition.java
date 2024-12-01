@@ -4,34 +4,78 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.io.*;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Expedition
 {
     private List<Colonie> colonies;
+    private List<Ressource> ressources;
 
     Expedition()
     {
         colonies = new ArrayList<Colonie>();
+        ressources = new ArrayList<>();
     }
     Expedition(List<Colonie> colonies)
     {
         this.colonies=colonies;
+        ressources = new ArrayList<>();
     }
 
-    public int algoBestPerfNAIF(Ressource r)
-    //TODO return le cout avec calculCout()
+    public Colonie getColonie(int index)
     {
-
-        return 0;
+        return colonies.get(index);
     }
 
-    public int algoBestPerfSUR(Ressource r)
-    //TODO return le cout avec calculCout()
+    public int algoFavoriteFirst(int colonieN, Ressource r) throws Exception
     {
+        Colonie colonie = colonies.get(colonieN);
+        if (colonie.getColons().size() != r.size())
+        {
+            throw new Exception("Not enough colonies for the ressources");
+        }
+        for(Colon colon : colonie.getColons())
+        {
+            for(int i=0;i<colon.getPreferences().size();i++)
+            {
+                if(r.contains(colon.getPreferenceAT(i)))
+                {
+                    colon.affectationRessource(colon.getPreferenceAT(i));
+                    break;
+                }
+            }
+        }
 
-        return 0;
+        return colonie.cout();
+    }
+
+    public int algoBestPerfSUR(int maxTentatives,int colonieN, Ressource r) throws Exception
+    {
+        Colonie colonie = colonies.get(colonieN);
+        int cout1 = algoFavoriteFirst(colonieN, r);
+        int cout2;
+        int i=0;
+
+        while(i<maxTentatives && cout1!=0)
+        {
+            Random generator = new Random();
+            int randomIndex1 = generator.nextInt(colonie.getColons().size());
+            int randomIndex2 = generator.nextInt(colonie.getColons().size());
+            Colon colon1 = colonie.getColons().get(randomIndex1);
+            Colon colon2 = colonie.getColons().get(randomIndex2);
+
+            colonie.echangerRessources(colon1, colon2);
+            cout2=colonie.cout();
+
+            if(cout1>cout2) //Cancel trade
+            {
+                colonie.echangerRessources(colon2,colon1);
+            }
+            i++;
+        }
+        return colonie.cout();
     }
 
     public int algoBestPerfSUPER(Ressource r)
@@ -47,12 +91,13 @@ public class Expedition
         return 0;
     }
 
-    public int Importation(String path) throws IOException
+    public int Importation(String path) throws Exception
     //TODO
     {
         List<String> keyClasses = Arrays.asList("Colon","ressource","deteste","preferences");
         List<String> linesOfFiles = Files.readAllLines(Paths.get(path));
         Colonie newColonie = new Colonie();
+        Ressource newRessource = new Ressource();
 
         //REGEX
         String colonRegex = "^colon(([a-z0-9]+)).$";
@@ -71,25 +116,49 @@ public class Expedition
             if(linesOfFiles.get(i).startsWith(keyClasses.get(0)))
             {
                 Matcher matcher = colonPatern.matcher(linesOfFiles.get(i));
-                //if(matcher.find())
-                  //  newColonie.ajouterColon(new Colon(matcher.group(1)));
+                if(matcher.find())
+                    newColonie.ajouterColon(new Colon(matcher.group(1)));
             }
 
             // Ressource Case
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(1)))
             {
                 Matcher matcher = ressourcePatern.matcher(linesOfFiles.get(i));
+                if(matcher.find())
+                    newRessource.addRessource(Integer.parseInt(matcher.group(1)));
             }
+
+            // Hate Case
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(2)))
             {
                 Matcher matcher = detestePatern.matcher(linesOfFiles.get(i));
+                if(matcher.find())
+                {
+                    Colon colonDeBase = newColonie.getColonObjet(matcher.group(1));
+                    Colon colonHated = newColonie.getColonObjet(matcher.group(2));
+                    colonDeBase.addRelation(colonHated);
+                }
             }
+
+            //Preferences Case
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(3)))
             {
                 Matcher matcher = preferencesPatern.matcher(linesOfFiles.get(i));
+                if(matcher.find())
+                {
+                    Colon colon = newColonie.getColonObjet(matcher.group(1));
+                    String preferencesList = matcher.group(2);
+                    String[] preferences = preferencesList.split(",");
+                    for (String preference : preferences)
+                    {
+                        colon.addPreference(Integer.parseInt(preference));
+                    }
+                }
             }
         }
 
+        colonies.add(newColonie);
+        ressources.add(newRessource);
         return 0;
     }
 

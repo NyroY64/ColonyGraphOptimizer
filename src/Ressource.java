@@ -59,6 +59,10 @@ public class Ressource
         return PileBase.get(n);
     }
 
+    public boolean contains(int n)
+    {
+        return PileBase.contains(n);
+    }
     public int size()
     {
         return PileBase.size();
