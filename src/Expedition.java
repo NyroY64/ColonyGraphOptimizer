@@ -166,9 +166,33 @@ public class Expedition
         return 0;
     }
 
-    public int save(String nomFichier)
+    public int save(String nomFichier,int colonieIndex)
     //TODO
     {
+        //Create File
+        try {
+            File saveFile = new File(nomFichier);
+            if (saveFile.createNewFile()) {
+                System.out.println("File created: " + saveFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+        }
+
+        //Write to file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier))) {
+            for (Colon colon: colonies.get(colonieIndex).getColons())
+            {
+                writer.write(colon.getNom()+"line"+colon.getRessource().toString());
+                writer.newLine(); // Add a newline after each line
+            }
+            System.out.println("File written successfully.");
+        } catch (IOException e) {
+            System.err.println("An error occurred: " + e.getMessage());
+        }
+
         return 0;
     }
 
