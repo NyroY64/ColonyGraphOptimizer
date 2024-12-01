@@ -2,6 +2,8 @@ import Exceptions.*;
 
 import java.util.*;
 
+import static java.util.logging.Logger.global;
+
 public class Colonie
 {
 	private final List<Colon> colons;
@@ -112,25 +114,53 @@ public class Colonie
         return 0;
     }
 
-    public int cout()
-    //TODO NOT WORKING
+    public int cout() throws Exception
     {
-        int jaloux = 0;
-        for (Colon colon : getColons())
-        {
-            Set<Colon> ennemis = colon.getRelationsDetestables();
-            if (ennemis == null) continue;
+        int cout = 0;
+        Set<Set<Colon>> alreadyHated = new HashSet<>();
+        int positionitemcolon1 = -1;
+        int positionitemcolon2 = -1;
 
-            for (Colon ennemi : ennemis) {
-                if (ennemi != null
-                        && colon.getPreferenceAT(ennemi.getRessource())
-                        < colon.getPreferenceAT(colon.getRessource())) {
-                    jaloux++;
-                    break;
+        for (Colon colon1 : colons)
+        {
+            if (colon1.getRessource()==0)
+            {
+                throw new Exception("Empty item slot");
+            }
+
+            if(!colon1.getRelationsDetestables().isEmpty())
+            {
+                for(Colon colon2 : colon1.getRelationsDetestables())
+                {
+                    Set<Colon> pair = new TreeSet<>(Comparator.comparing(Colon::getNom));
+                    pair.add(colon1);
+                    pair.add(colon2);
+
+                    for(int i = 0; i<colon1.getPreferences().size(); i++)
+                    {
+                        if(colon1.getPreferenceAT(i)==colon1.getRessource())
+                        {
+                            positionitemcolon1 = i;
+                        }
+                    }
+                    for(int i = 0; i<colon2.getPreferences().size(); i++)
+                    {
+                        if (colon2.getPreferenceAT(i)==colon2.getRessource())
+                        {
+                            positionitemcolon2 = i;
+                        }
+                    }
+                    if(positionitemcolon2>positionitemcolon1 && !alreadyHated.contains(pair))
+                    {
+                        alreadyHated.add(pair);
+                        cout++;
+                    }
                 }
+
             }
         }
-        return jaloux;
+
+        return cout;
     }
 
     public void echangerRessources(Colon colon1, Colon colon2) throws EchangeAvecSoiMemeException, ColonInexistantException

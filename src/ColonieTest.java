@@ -231,7 +231,7 @@ public class ColonieTest
     }
 
     @Test
-    void Testcout()
+    void Testcout() throws Exception
     {
         Colonie colonie = new Colonie();
         Colon A = new Colon("A", new LinkedHashSet<>(Arrays.asList(1, 2, 3,4)));
@@ -247,6 +247,11 @@ public class ColonieTest
         C.affectationRessource(3);
         A.affectationRessource(2);
         D.affectationRessource(4);
+
+        colonie.ajouterColon(A);
+        colonie.ajouterColon(B);
+        colonie.ajouterColon(C);
+        colonie.ajouterColon(D);
 
         Assertions.assertEquals(2,colonie.cout());
     }

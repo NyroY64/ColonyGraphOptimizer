@@ -48,7 +48,7 @@ public class Expedition
     }
 
     public int Importation(String path) throws IOException
-    //TODO PART 2
+    //TODO
     {
         List<String> keyClasses = Arrays.asList("Colon","ressource","deteste","preferences");
         List<String> linesOfFiles = Files.readAllLines(Paths.get(path));
@@ -94,7 +94,7 @@ public class Expedition
     }
 
     public int save(String nomFichier)
-    //TODO PART2
+    //TODO
     {
         return 0;
     }
@@ -102,8 +102,6 @@ public class Expedition
     public String HashResult(Colonie coco)
     {
         StringBuffer hashResult = new StringBuffer();
-
-
         return hashResult.toString();
     }
 }
