@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Menu {
+public class Menu
+{
     private Expedition expedition;
     private int nombreTOTAL;
 

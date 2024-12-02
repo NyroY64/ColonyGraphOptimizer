@@ -90,22 +90,13 @@ public class Expedition
         return 0;
     }
 
-    public int affectation(Ressource r, int manuel)
-    //TODO
-    //
-    // F[Affectation](Ressources r,INT fonction, INT Manuel): simuler le partage des ressources entre colons:
-    //,INT fonction => 0,1 ou 2 pour pour l’algo 1 2 ou 3.
-    //2 CASE{Manuel, Auto(AlgoBestPerfNAIF,AlgoBestPerfSUR)} MEME fonction pour manuel et auto(Mettre la fonction a 0 pour toujours boucler sur le manuel avant l’implementation de AlgoBestPerf)
+    public int affectation(int colonieIndex,Ressource r) throws Exception
+    // simuler le partage des ressources entre colons
     {
-        if(manuel==0)
-        {
-
-        }
-        else
-        {
-
-        }
-        return 0;
+        Colonie colonie = colonies.get(colonieIndex);
+        int maxTentatives=100;
+        //Algo usage
+        return algoBestPerfSUR(maxTentatives, colonieIndex, r);
     }
 
     public int Importation(String path) throws Exception
@@ -182,48 +173,51 @@ public class Expedition
         return 0;
     }
 
-    public int save(String nomFichier,int colonieIndex)
+    public int save(String nomFichier, int colonieIndex)
     {
-        //Create File
-        try
-        {
-            File saveFile = new File(nomFichier);
-            if (saveFile.createNewFile())
-            {
-                System.out.println("File created: " + saveFile.getName());
-            }
-            else
-            {
-                System.out.println("File already exists.");
+        // Folder
+        String folderName = "SolutionSaves";
+        File folder = new File(folderName);
+
+        // Ensure the folder exists
+        if (!folder.exists()) {
+            if (!folder.mkdir()) {
+                System.out.println("Failed to create directory: " + folderName);
+                return -3; // Return an error code for folder creation failure
             }
         }
-        catch (IOException e)
-        {
-            System.out.println("An error occurred.");
+
+        // Folder + filename
+        File saveFile = new File(folderName + File.separator + nomFichier);
+
+        // Create File
+        try {
+            if (saveFile.createNewFile()) {
+                System.out.println("File created: " + saveFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while creating the file.");
             return -1;
         }
 
-        //Write to file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier)))
-        {
-            for (Colon colon: colonies.get(colonieIndex).getColons())
-            {
-                writer.write(colon.getNom()+":"+colon.getRessource());
-                writer.newLine(); // Add a newline after each line
+        // Write to file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(saveFile))) {
+            for (Colon colon : colonies.get(colonieIndex).getColons()) {
+                writer.write(colon.getNom() + ":" + colon.getRessource());
+                writer.newLine();
             }
-            writer.write("\nCout: "+colonies.get(colonieIndex).cout());
+            writer.write("\nCout: " + colonies.get(colonieIndex).cout());
             System.out.println("File written successfully.");
-        }
-        catch (IOException e)
-        {
-            System.err.println("An error occurred: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("An error occurred while writing to the file: " + e.getMessage());
             return -2;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         return 0;
     }
+
 }
