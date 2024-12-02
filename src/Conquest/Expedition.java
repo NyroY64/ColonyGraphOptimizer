@@ -113,7 +113,7 @@ public class Expedition
         String colonRegex = "^colon\\(([a-z0-9_]+)\\).$";
         String ressourceRegex = "^ressource\\(([a-z0-9_]+)\\).$";
         String detesteRegex = "^deteste\\(([a-z0-9_]+)(?:,([a-z0-9_]+))+\\).$";
-        String preferencesRegex = "^preferences\\(([a-z0-9_]+)(?:,([a-z0-9_]+))+\\).$";
+        String preferencesRegex = "^preferences\\(([a-z0-9_]+),([a-z0-9_,]+)\\)\\.$";
 
         Pattern colonPatern = Pattern.compile(colonRegex);
         Pattern ressourcePatern = Pattern.compile(ressourceRegex);
@@ -158,14 +158,14 @@ public class Expedition
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(3)))
             {
                 Matcher matcher = preferencesPatern.matcher(linesOfFiles.get(i));
-                if(matcher.find())
+                if (matcher.find())
                 {
                     Colon colon = newColonie.getColonObjet(matcher.group(1));
                     String preferencesList = matcher.group(2);
                     String[] preferences = preferencesList.split(",");
                     for (String preference : preferences)
                     {
-                        colon.addPreference(preference);
+                        colon.addPreference(preference.trim());
                     }
                 }
             }

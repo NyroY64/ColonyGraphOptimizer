@@ -1,11 +1,11 @@
 colon(nom_colon_1).
 colon(nom_colon_2).
 colon(nom_colon_3).
-ressource(1).
-ressource(2).
-ressource(3).
+ressource(nom_ressource_1).
+ressource(nom_ressource_2).
+ressource(nom_ressource_3).
 deteste(nom_colon_1,nom_colon_2).
 deteste(nom_colon_2,nom_colon_3).
-preferences(nom_colon_1,1,2,3).
-preferences(nom_colon_2,2,1,3).
-preferences(nom_colon_3,3,1,2).
+preferences(nom_colon_1,nom_ressource_1,nom_ressource_2,nom_ressource_3).
+preferences(nom_colon_2,nom_ressource_2,nom_ressource_1,nom_ressource_3).
+preferences(nom_colon_3,nom_ressource_3,nom_ressource_1,nom_ressource_2).

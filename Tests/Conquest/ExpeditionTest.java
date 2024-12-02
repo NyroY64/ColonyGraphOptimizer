@@ -8,7 +8,8 @@ public class ExpeditionTest
     void TestImportationExpedition() throws Exception
     {
         Expedition expedition = new Expedition();
-        expedition.Importation("S:\\DocumentsX\\GitHub\\ColonyGraphOptimizer\\src\\fichiertesteColon.txt");
+        expedition.Importation("src\\fichiertesteColon.txt");
+
 
         System.out.println(expedition.getColonie(0).toString());
     }
