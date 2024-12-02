@@ -16,8 +16,8 @@ import java.util.regex.Pattern;
 
 public class Expedition
 {
-    private List<Colonie> colonies;
-    private List<Ressource> ressources;
+    private final List<Colonie> colonies;
+    private final List<Ressource> ressources;
 
     Expedition()
     {
@@ -87,22 +87,28 @@ public class Expedition
     public int algoBestPerfSUPER(Ressource r)
     //TODO return le cout avec calculCout()
     {
-
         return 0;
     }
 
-    public int affectation(Ressource r, int fonction, int manuel)
+    public int affectation(Ressource r, int manuel)
     //TODO
     //
     // F[Affectation](Ressources r,INT fonction, INT Manuel): simuler le partage des ressources entre colons:
     //,INT fonction => 0,1 ou 2 pour pour l’algo 1 2 ou 3.
     //2 CASE{Manuel, Auto(AlgoBestPerfNAIF,AlgoBestPerfSUR)} MEME fonction pour manuel et auto(Mettre la fonction a 0 pour toujours boucler sur le manuel avant l’implementation de AlgoBestPerf)
     {
+        if(manuel==0)
+        {
+
+        }
+        else
+        {
+
+        }
         return 0;
     }
 
     public int Importation(String path) throws Exception
-    //TODO
     {
         List<String> keyClasses = Arrays.asList("colon","ressource","deteste","preferences");
         List<String> linesOfFiles = Files.readAllLines(Paths.get(path));
@@ -177,38 +183,47 @@ public class Expedition
     }
 
     public int save(String nomFichier,int colonieIndex)
-    //TODO
     {
         //Create File
-        try {
+        try
+        {
             File saveFile = new File(nomFichier);
-            if (saveFile.createNewFile()) {
+            if (saveFile.createNewFile())
+            {
                 System.out.println("File created: " + saveFile.getName());
-            } else {
+            }
+            else
+            {
                 System.out.println("File already exists.");
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             System.out.println("An error occurred.");
+            return -1;
         }
 
         //Write to file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier)))
+        {
             for (Colon colon: colonies.get(colonieIndex).getColons())
             {
-                writer.write(colon.getNom()+"line"+colon.getRessource().toString());
+                writer.write(colon.getNom()+":"+colon.getRessource());
                 writer.newLine(); // Add a newline after each line
             }
+            writer.write("\nCout: "+colonies.get(colonieIndex).cout());
             System.out.println("File written successfully.");
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             System.err.println("An error occurred: " + e.getMessage());
+            return -2;
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
         }
 
         return 0;
-    }
-
-    public String HashResult(Colonie coco)
-    {
-        StringBuffer hashResult = new StringBuffer();
-        return hashResult.toString();
     }
 }
