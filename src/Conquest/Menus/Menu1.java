@@ -1,3 +1,8 @@
+package Conquest.Menus;
+
+import Conquest.Struct.Colon;
+import Conquest.Struct.Colonie;
+
 //TODO
 public class  Menu1 extends Menu
 {

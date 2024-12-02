@@ -6,17 +6,17 @@ JAVA 17
 Damien:
 
 Laissez les Test dans le main c'est plus rapide et simple pour compiler. Faudra juste pas oublier a la fin de les mettre dans un dossier a eux.
-Le cout on avait dit dans Expedition mais a voir si c'est pertinant.
+Le cout on avait dit dans Conquest.Expedition mais a voir si c'est pertinant.
 
-Menu devrait juste contenir de quoi appeller Menu1 ou Menu2 ou MenuLoadTXT.
+Conquest.Menus devrait juste contenir de quoi appeller Conquest.Menus.Menu1 ou Conquest.Menus.Menu2 ou Conquest.Menus.MenuLoadTXT.
 
 Suivre l'UML.
 
-Colon a la liste destes[REFRACTOR TOTAL] {DONE}
+Conquest.Struct.Colon a la liste destes[REFRACTOR TOTAL] {DONE}
 
 Colon&Colonie done, cout() to fix ONLY
 
-Algo to Implement in Expedition.
+Algo to Implement in Conquest.Expedition.
 
 Youcef:
 -corriger les bug dans colonie

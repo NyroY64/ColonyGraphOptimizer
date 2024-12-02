@@ -1,4 +1,5 @@
-import java.awt.*;
+package Conquest.Menus;
+
 import java.awt.Menu;
 
 //TODO

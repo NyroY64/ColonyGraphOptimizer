@@ -1,9 +1,11 @@
-import Exceptions.*;
+package Conquest.Menus;
+
+import Conquest.Struct.Colon;
+import Conquest.Struct.Colonie;
+import Conquest.Expedition;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Scanner;
-
 
 
 public class Menu {
@@ -45,7 +47,7 @@ public class Menu {
                     String nom = scanner.next();
                     Colon colon = new Colon(nom);
                     while (scanner.hasNextInt()) {
-                        colon.addPreference(scanner.nextInt());
+                        colon.addPreference(scanner.next());
                     }
                     colonie.ajouterColon(colon);
                     colonie.ajouterColon(colon);

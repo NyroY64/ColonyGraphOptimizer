@@ -1,8 +1,8 @@
-import Exceptions.*;
+package Conquest.Struct;
+
+import Conquest.Exception.*;
 
 import java.util.*;
-
-import static java.util.logging.Logger.global;
 
 public class Colonie
 {
@@ -104,7 +104,7 @@ public class Colonie
     public int verifierPreferencesCompletes(int nombreDeRessources) throws PreferencesIncompletesException
     {
         for (Colon colon : colons) {
-            LinkedHashSet<Integer> preferences = colon.getPreferences();
+            LinkedHashSet<String> preferences = colon.getPreferences();
             if (preferences == null || preferences.size() != nombreDeRessources) {
                 throw new PreferencesIncompletesException(
                         "Erreur : le colon " + colon.getNom() + " n'a pas une liste de préférences complète."
@@ -123,7 +123,7 @@ public class Colonie
 
         for (Colon colon1 : colons)
         {
-            if (colon1.getRessource()==0)
+            if (Objects.equals(colon1.getRessource(), ""))
             {
                 throw new Exception("Empty item slot");
             }
@@ -138,14 +138,14 @@ public class Colonie
 
                     for(int i = 0; i<colon1.getPreferences().size(); i++)
                     {
-                        if(colon1.getPreferenceAT(i)==colon1.getRessource())
+                        if(Objects.equals(colon1.getPreferenceAT(i), colon1.getRessource()))
                         {
                             positionitemcolon1 = i;
                         }
                     }
                     for(int i = 0; i<colon2.getPreferences().size(); i++)
                     {
-                        if (colon2.getPreferenceAT(i)==colon2.getRessource())
+                        if (Objects.equals(colon2.getPreferenceAT(i), colon2.getRessource()))
                         {
                             positionitemcolon2 = i;
                         }
@@ -175,8 +175,8 @@ public class Colonie
             throw new ColonInexistantException("Erreur : au moins un des colons n'existe pas (" + colon1.getNom() + ", " + colon2.getNom() + ").");
         }
 
-		int ressource1 = colon1.getRessource();
-		int ressource2 = colon2.getRessource();
+		String ressource1 = colon1.getRessource();
+		String ressource2 = colon2.getRessource();
 
 		colon1.affectationRessource(ressource2);
 		colon2.affectationRessource(ressource1);
@@ -188,9 +188,10 @@ public class Colonie
         StringBuilder temp = new StringBuilder();
         for(Colon c:colons)
         {
+            String actual = c.getRessource().isEmpty() ? "aucune" : c.getRessource();
             temp.append(c.getNom())
-                    .append(" Got ")
-                    .append(c.getRessource())
+                    .append(" a ")
+                    .append(actual)
                     .append(" ressource.");
             System.out.println(temp);
             Result.append(temp).append("\n");
@@ -208,10 +209,11 @@ public class Colonie
             result.append(colon.toString());
             Colon colonJalouxDe = null;
             if (colon.getRelationsDetestables() != null) {
-                for (Colon ennemi : colon.getRelationsDetestables()) {
-                    if (ennemi.getRessource() != null &&
-                            colon.getPreferenceAT(ennemi.getRessource())
-                                    < colon.getPreferenceAT(colon.getRessource())) {
+                for (Colon ennemi : colon.getRelationsDetestables())
+                {
+
+                    if (ennemi.getRessource() != null && colon.getPreferenceIndex(ennemi.getRessource()) < colon.getPreferenceIndex(colon.getRessource()))
+                    {
                         colonJalouxDe = ennemi;
                         break;
                     }

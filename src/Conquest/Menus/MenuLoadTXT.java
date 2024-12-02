@@ -1,3 +1,6 @@
+package Conquest.Menus;
+
+import Conquest.Struct.Colonie;
 
 //TODO
 public class MenuLoadTXT extends Menu

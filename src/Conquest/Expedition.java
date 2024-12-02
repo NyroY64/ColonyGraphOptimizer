@@ -1,3 +1,9 @@
+package Conquest;
+
+import Conquest.Struct.Colon;
+import Conquest.Struct.Colonie;
+import Conquest.Struct.Ressource;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -85,8 +91,12 @@ public class Expedition
         return 0;
     }
 
-    public int affectation(Ressource r, int fonction,int manuel)
+    public int affectation(Ressource r, int fonction, int manuel)
     //TODO
+    //
+    // F[Affectation](Ressources r,INT fonction, INT Manuel): simuler le partage des ressources entre colons:
+    //,INT fonction => 0,1 ou 2 pour pour l’algo 1 2 ou 3.
+    //2 CASE{Manuel, Auto(AlgoBestPerfNAIF,AlgoBestPerfSUR)} MEME fonction pour manuel et auto(Mettre la fonction a 0 pour toujours boucler sur le manuel avant l’implementation de AlgoBestPerf)
     {
         return 0;
     }
@@ -129,7 +139,7 @@ public class Expedition
             {
                 Matcher matcher = ressourcePatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
-                    newRessource.addRessource(Integer.parseInt(matcher.group(1)));
+                    newRessource.addRessource(matcher.group(1));
             }
 
             // Hate Case
@@ -155,7 +165,7 @@ public class Expedition
                     String[] preferences = preferencesList.split(",");
                     for (String preference : preferences)
                     {
-                        colon.addPreference(Integer.parseInt(preference));
+                        colon.addPreference(preference);
                     }
                 }
             }

@@ -1,33 +1,35 @@
-import Exceptions.ColonInexistantException;
-import Exceptions.RelationAvecSoiMemeException;
-import Exceptions.RelationDejaExistanteException;
+package Conquest.Struct;
 
-import java.util.ArrayList;
+import Conquest.Exception.ColonInexistantException;
+import Conquest.Exception.RelationAvecSoiMemeException;
+import Conquest.Exception.RelationDejaExistanteException;
+
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
 public class Colon
 {
 	private String nom;
-	private LinkedHashSet<Integer> preferences;
-	private Integer ressourceAttribuee;
-	private LinkedHashSet<Colon> relationsDetestables;
+	private LinkedHashSet<String> preferences;
+	private String ressourceAttribuee;
+	private final LinkedHashSet<Colon> relationsDetestables;
 
 	public Colon(String nom)
 	{
 		this.nom = nom;
 		preferences = new LinkedHashSet<>();
-		ressourceAttribuee = 0;
+		ressourceAttribuee = "";
 		relationsDetestables = new LinkedHashSet<>();
 	}
 
-	public Colon(String nom, LinkedHashSet<Integer> preferences)
+	public Colon(String nom, LinkedHashSet<String> preferences)
 	{
 		this.nom = nom;
 		this.preferences = preferences;
-		ressourceAttribuee = 0;
+		ressourceAttribuee = "";
 		relationsDetestables = new LinkedHashSet<>();
 	}
 
@@ -36,12 +38,28 @@ public class Colon
 		return this.nom;
 	}
 
-	public LinkedHashSet<Integer> getPreferences()
+	public LinkedHashSet<String> getPreferences()
 	{
 		return preferences;
 	}
 
-	public int getPreferenceAT(int n)
+	public int getPreferenceIndex(String preference)
+	{
+		int index = 0;
+		for (String pref : preferences)
+		{
+			if (pref.equals(preference))
+			{
+				return index;
+			}
+			index++;
+		}
+
+
+		return -1;
+	}
+
+	public String getPreferenceAT(int n)
 	{
 		if (n < 0 || n >= preferences.size())
 		{
@@ -53,7 +71,7 @@ public class Colon
 
 		while (iterator.hasNext())
 		{
-			int currentElement = iterator.next();
+			String currentElement = iterator.next();
 			if (currentIndex == n)
 			{
 				return currentElement;
@@ -65,27 +83,27 @@ public class Colon
 		throw new IllegalStateException("Element not found");
 	}
 
-	public void addPreference(int pref)
+	public void addPreference(String pref)
 	{
 		preferences.add(pref);
 	}
 
-	public void addPreferences(LinkedHashSet<Integer> prefs)
+	public void addPreferences(LinkedHashSet<String> prefs)
 	{
 		preferences.addAll(prefs);
 	}
 
-	public void setPreferences(LinkedHashSet<Integer> prefs)
+	public void setPreferences(LinkedHashSet<String> prefs)
 	{
 		preferences = prefs;
 	}
 
-	public Integer getRessource()
+	public String getRessource()
 	{
 		return ressourceAttribuee;
 	}
 
-	public void affectationRessource(Integer ressourceAttribuee)
+	public void affectationRessource(String ressourceAttribuee)
 	{
 		this.ressourceAttribuee = ressourceAttribuee;
 	}
@@ -146,7 +164,10 @@ public class Colon
 			result.append("pas encore allouée");
 		} else
 		{
-			result.append(ressourceAttribuee);
+			if(Objects.equals(ressourceAttribuee, ""))
+				result.append("aucune");
+			else
+				result.append(ressourceAttribuee);
 		}
 		result.append(")");
 		result.append(", Préférences : ");
@@ -159,7 +180,7 @@ public class Colon
 		}
 		Set<Colon> ennemis = relationsDetestables;
 		result.append(", Ennemis : ");
-		if (ennemis == null || ennemis.isEmpty())
+		if (ennemis.isEmpty())
 		{
 			result.append("aucun");
 		} else
