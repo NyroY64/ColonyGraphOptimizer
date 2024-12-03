@@ -80,6 +80,11 @@ public class Expedition
 
     public int algoBestPerfSUR(int maxTentatives,int colonieN, Ressource r) throws Exception
     {
+        //TODO Debug
+        //Colon A (Ressource allouée : 1), Préférences : [1, 2, 3, 4], Ennemis : {B} et n'est jaloux de personne
+        //Colon B (Ressource allouée : 1), Préférences : [1, 3, 2, 4], Ennemis : {A, C, D} et n'est jaloux de personne
+        //Colon C (Ressource allouée : 3), Préférences : [3, 2, 1, 4], Ennemis : {B} et n'est jaloux de personne
+        //Colon D (Ressource allouée : 1), Préférences : [1, 4, 2, 3], Ennemis : {B} et n'est jaloux de personne
         Colonie colonie = colonies.get(colonieN);
         int cout1 = algoFavoriteFirst(colonieN, r);
         int cout2;

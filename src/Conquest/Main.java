@@ -13,10 +13,10 @@ public class Main
         if(args.length == 0)
         {
             Menu menu= new Menu(expedition);
-            menu.afficherMenuCreationColonie();
-            menu.afficherMenuCreationRessources();
-            menu.afficherMenuConfiguration();
-            menu.afficherMenuAffectation();
+            int currentColonie = menu.afficherMenuCreationColonie();
+            int ressourceIndex = menu.afficherMenuCreationRessources();
+            menu.afficherMenuConfiguration(currentColonie);
+            menu.afficherMenuAffectation(currentColonie,ressourceIndex);
 
         }
         else if (args.length == 1)
