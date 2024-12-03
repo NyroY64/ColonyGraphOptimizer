@@ -35,6 +35,27 @@ public class Expedition
         return colonies.get(index);
     }
 
+    public int createColonie()
+    {
+        Colonie colonie = new Colonie();
+        colonies.add(colonie);
+        return colonies.size()-1;
+    }
+
+    public int createRessource()
+    //TODO unitest
+    {
+        Ressource ressource = new Ressource();
+        ressources.add(ressource);
+        return ressources.size()-1;
+    }
+
+    public Ressource getRessource(int index)
+    //TODO unitest
+    {
+        return ressources.get(index);
+    }
+
     public int algoFavoriteFirst(int colonieN, Ressource r) throws Exception
     {
         Colonie colonie = colonies.get(colonieN);
@@ -90,13 +111,14 @@ public class Expedition
         return 0;
     }
 
-    public int affectation(int colonieIndex,Ressource r) throws Exception
+    public int affectation(int colonieIndex) throws Exception
     // simuler le partage des ressources entre colons
     {
         Colonie colonie = colonies.get(colonieIndex);
+        Ressource ressource = ressources.get(colonieIndex);
         int maxTentatives=100;
         //Algo usage
-        return algoBestPerfSUR(maxTentatives, colonieIndex, r);
+        return algoBestPerfSUR(maxTentatives, colonieIndex, ressource);
     }
 
     public int Importation(String path) throws Exception
@@ -173,7 +195,7 @@ public class Expedition
         return 0;
     }
 
-    public int save(String nomFichier, int colonieIndex)
+    public String save(String nomFichier, int colonieIndex)
     {
         // Folder
         String folderName = "SolutionSaves";
@@ -183,7 +205,6 @@ public class Expedition
         if (!folder.exists()) {
             if (!folder.mkdir()) {
                 System.out.println("Failed to create directory: " + folderName);
-                return -3; // Return an error code for folder creation failure
             }
         }
 
@@ -199,7 +220,6 @@ public class Expedition
             }
         } catch (IOException e) {
             System.out.println("An error occurred while creating the file.");
-            return -1;
         }
 
         // Write to file
@@ -212,12 +232,11 @@ public class Expedition
             System.out.println("File written successfully.");
         } catch (IOException e) {
             System.err.println("An error occurred while writing to the file: " + e.getMessage());
-            return -2;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return 0;
+        return saveFile.getAbsolutePath();
     }
 
 }

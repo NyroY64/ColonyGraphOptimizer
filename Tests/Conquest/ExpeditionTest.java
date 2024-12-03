@@ -26,7 +26,7 @@ public class ExpeditionTest
         colonie.getColons().get(1).affectationRessource("CHOCO");
         colonie.getColons().get(2).affectationRessource("Selecto");
 
-        Assertions.assertEquals(0,expedition.save("SaveTest",0));
+        Assertions.assertTrue(expedition.save("SaveTest",0).endsWith("\\SolutionSaves\\SaveTest"));
 
     }
 

@@ -200,6 +200,17 @@ public class Colonie
         return Result.toString();
     }
 
+    public void afficherAffectations()
+    //TODO unitest
+    {
+        System.out.println();
+        for(Colon c:colons)
+        {
+            System.out.println(c.getNom()+":"+c.getRessource());
+        }
+        System.out.println();
+    }
+
     @Override
     public String toString()
     {
