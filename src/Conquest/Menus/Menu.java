@@ -1,6 +1,7 @@
 package Conquest.Menus;
 
 import Conquest.Exception.ColonInexistantException;
+import Conquest.Exception.RessourceDejaExistatneException;
 import Conquest.Struct.Colon;
 import Conquest.Struct.Colonie;
 import Conquest.Expedition;
@@ -86,6 +87,10 @@ public class Menu
                 System.out.print("Entrez le nom de la ressource " + (i + 1) + " : ");
                 String ressource = scanner.nextLine();
                 ressources.addRessource(ressource);
+                
+                if(ressources.contains(ressource)){
+                    throw new RessourceDejaExistatneException("cette ressource "+ ressource +"a deja etais ajouter !");
+                }
             }
             return ressourceIndex;
     }
