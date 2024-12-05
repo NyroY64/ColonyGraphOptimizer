@@ -14,8 +14,11 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class Expedition
 {
+
+    
     private final List<Colonie> colonies;
     private final List<Ressource> ressources;
 
@@ -24,11 +27,14 @@ public class Expedition
         colonies = new ArrayList<Colonie>();
         ressources = new ArrayList<>();
     }
+
     Expedition(List<Colonie> colonies)
     {
         this.colonies=colonies;
         ressources = new ArrayList<>();
     }
+
+
 
     public Colonie getColonie(int index)
     {
@@ -49,6 +55,7 @@ public class Expedition
         ressources.add(ressource);
         return ressources.size()-1;
     }
+
 
     public Ressource getRessource(int index)
     //TODO unitest

@@ -86,11 +86,14 @@ public class Menu
             {
                 System.out.print("Entrez le nom de la ressource " + (i + 1) + " : ");
                 String ressource = scanner.nextLine();
-                ressources.addRessource(ressource);
-                
+
                 if(ressources.contains(ressource)){
                     throw new RessourceDejaExistatneException("cette ressource "+ ressource +"a deja etais ajouter !");
                 }
+
+                ressources.addRessource(ressource);
+                
+               
             }
             return ressourceIndex;
     }
