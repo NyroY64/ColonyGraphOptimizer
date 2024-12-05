@@ -4,6 +4,22 @@ import Conquest.Expedition;
 
 import java.util.Scanner;
 
+/**
+ * Classe MenuLoadTXT
+ *
+ * Cette classe sert de Menu specifique au lancement via un fichier en argument.
+ *
+ * 1) Resolution automatique
+ * 2) Sauvegarde de la solution actuelle
+ * 3) Fin
+ *
+ * @see Conquest.Main#main(String[])
+ *
+ * @author Devasenaradjounayagar Damien
+ *
+ * @version 1.0
+ *
+ */
 public class MenuLoadTXT extends Menu
 {
     public MenuLoadTXT(Expedition expedition)

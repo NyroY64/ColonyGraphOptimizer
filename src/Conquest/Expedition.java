@@ -16,10 +16,61 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Classe Expedition
+ *
+ * Une expedition sert a gerer plusieurs Colonies et a faire des actions sur elles. Comme la creation ou la sauvegarde.
+ *
+ * @see Expedition#Expedition()
+ * @see Expedition#Expedition(List)
+ * @see Expedition#getColonie(int)
+ * @see Expedition#createColonie()
+ * @see Expedition#algoFavoriteFirst(int, Ressource)
+ * @see Expedition#algoBestPerfSUR(int, int, Ressource)
+ * @see Expedition#affectation(int)
+ * @see Expedition#Importation(String)
+ * @see Expedition#save(String, int)
+ * @see Menu
+ * @see Menu#Menu(Expedition)
+ * @see Menu#getExpedition()
+ * @see MenuLoadTXT#afficherMenuConfigurationLoadTXT()
+ * @see Main#main(String[])
+ *
+ * @author Devasenaradjounayagar Damien
+ *
+ * @version 1.0
+ *
+ */
 public class Expedition
 {
+    /**
+     * Liste des Colonies
+     *
+     * @see Expedition#Expedition()
+     * @see Expedition#Expedition(List)
+     * @see Expedition#getColonie(int)
+     * @see Expedition#createColonie()
+     * @see Expedition#algoFavoriteFirst(int, Ressource)
+     * @see Expedition#algoBestPerfSUR(int, int, Ressource)
+     * @see Expedition#affectation(int)
+     * @see Expedition#Importation(String)
+     * @see Expedition#save(String, int)
+     *
+     */
     private final List<Colonie> colonies;
 
+    /**
+     * Liste des Ressources
+     *
+     * @see Expedition#Expedition()
+     * @see Expedition#Expedition(List)
+     * @see Expedition#createRessource()
+     * @see Expedition#algoFavoriteFirst(int, Ressource)
+     * @see Expedition#algoBestPerfSUR(int, int, Ressource)
+     * @see Expedition#affectation(int)
+     * @see Expedition#Importation(String)
+     *
+     */
     private final List<Ressource> ressources;
 
     /**
