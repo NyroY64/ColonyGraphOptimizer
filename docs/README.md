@@ -32,16 +32,19 @@ ColonyGraphOptimizer is inspired by the need to allocate resources among agents 
 ## **Installation**
 1. **Clone the Repository**:  
    ```bash
-   git clone https://github.com/<your-username>/ColonyGraphOptimizer.git
+   git clone https://github.com/<NyroY64>/ColonyGraphOptimizer.git
    cd ColonyGraphOptimizer
    ```
-2. **Compile the Code** (if using C++):  
+2. **Compile the Code** ():  
    ```bash
-   g++ -o colony_optimizer main.cpp -std=c++17
+   javac Conquest/**/*.java Main.java
+
+   
    ```
 3. **Run the Application**:  
    ```bash
-   ./colony_optimizer
+   java Conquest.Main
+
    ```
 
 ---
