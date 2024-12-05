@@ -11,7 +11,6 @@ public class MenuLoadTXT extends Menu
         super(expedition);
     }
 
-
     public void afficherMenuConfigurationLoadTXT() throws Exception
     {
         Scanner scanner = super.getScanner();
@@ -21,8 +20,8 @@ public class MenuLoadTXT extends Menu
         boolean enCours = true;
         while (enCours)
         {
-            System.out.println("1) Ajouter une relation entre deux colons");
-            System.out.println("2) Ajouter les préférences d’un colon");
+            System.out.println("1) Resolution automatique");
+            System.out.println("2) Sauvegarde de la solution actuelle");
             System.out.println("3) Fin");
             int choix = scanner.nextInt();
             scanner.nextLine();  // Consomme le saut de ligne
