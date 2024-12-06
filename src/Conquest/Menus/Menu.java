@@ -232,18 +232,28 @@ public class Menu
                 switch (choix)
                 {
                     case 1:
-                        System.out.print("Entrer les noms des deux colons à échanger : ");
-                        String nom1 = scanner.nextLine();
-                        String nom2 = scanner.nextLine();
-                        Colon c1 = colonie.getColonObjet(nom1);
-                        Colon c2 = colonie.getColonObjet(nom2);
+                        System.out.print("Entrer les noms des deux colons à échanger (ex : A B): ");
+                        String nom1 = scanner.next();
+                        String nom2 = scanner.next();
+                        scanner.nextLine();
 
-                        colonie.echangerRessources(c1, c2);
+                        Colon c1 = null;
+                        Colon c2 = null;
+                        ArrayList<Colon> colons = null;
+                        try
+                        {
+                            c1 = colonie.getColonObjet(nom1);
+                            c2 = colonie.getColonObjet(nom2);
+                            colonie.echangerRessources(c1, c2);
+                        }catch (Exception e)
+                        {
+                            System.out.println(e.getMessage());
+                        }
                         colonie.afficherAffectations();
                         break;
                     case 2:
                         int cout = colonie.cout();
-                        System.out.println("Nombre de colons jaloux : " + cout+"[cout]");
+                        System.out.println("\nNombre de colons jaloux : " + cout+"[cout]");
                         colonie.afficherAffectations();
                         break;
                     case 3:

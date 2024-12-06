@@ -4,13 +4,28 @@ import Conquest.Expedition;
 
 import java.util.Scanner;
 
+/**
+ * Classe MenuLoadTXT
+ *
+ * Cette classe sert de Menu specifique au lancement via un fichier en argument.
+ *
+ * 1) Resolution automatique
+ * 2) Sauvegarde de la solution actuelle
+ * 3) Fin
+ *
+ * @see Conquest.Main#main(String[])
+ *
+ * @author Devasenaradjounayagar Damien
+ *
+ * @version 1.0
+ *
+ */
 public class MenuLoadTXT extends Menu
 {
     public MenuLoadTXT(Expedition expedition)
     {
         super(expedition);
     }
-
 
     public void afficherMenuConfigurationLoadTXT() throws Exception
     {
@@ -21,8 +36,8 @@ public class MenuLoadTXT extends Menu
         boolean enCours = true;
         while (enCours)
         {
-            System.out.println("1) Ajouter une relation entre deux colons");
-            System.out.println("2) Ajouter les préférences d’un colon");
+            System.out.println("1) Resolution automatique");
+            System.out.println("2) Sauvegarde de la solution actuelle");
             System.out.println("3) Fin");
             int choix = scanner.nextInt();
             scanner.nextLine();  // Consomme le saut de ligne

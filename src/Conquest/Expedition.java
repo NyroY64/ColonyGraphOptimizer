@@ -1,5 +1,7 @@
 package Conquest;
 
+import Conquest.Menus.Menu;
+import Conquest.Menus.MenuLoadTXT;
 import Conquest.Struct.Colon;
 import Conquest.Struct.Colonie;
 import Conquest.Struct.Ressource;
@@ -14,33 +16,116 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Classe Expedition
+ *
+ * Une expedition sert a gerer plusieurs Colonies et a faire des actions sur elles. Comme la creation ou la sauvegarde.
+ *
+ * @see Expedition#Expedition()
+ * @see Expedition#Expedition(List)
+ * @see Expedition#getColonie(int)
+ * @see Expedition#createColonie()
+ * @see Expedition#algoFavoriteFirst(int, Ressource)
+ * @see Expedition#algoBestPerfSUR(int, int, Ressource)
+ * @see Expedition#affectation(int)
+ * @see Expedition#Importation(String)
+ * @see Expedition#save(String, int)
+ * @see Menu
+ * @see Menu#Menu(Expedition)
+ * @see Menu#getExpedition()
+ * @see MenuLoadTXT#afficherMenuConfigurationLoadTXT()
+ * @see Main#main(String[])
+ *
+ * @author Devasenaradjounayagar Damien
+ *
+ * @version 1.0
+ *
+ */
 public class Expedition
 {
-
-    
+    /**
+     * Liste des Colonies
+     *
+     * @see Expedition#Expedition()
+     * @see Expedition#Expedition(List)
+     * @see Expedition#getColonie(int)
+     * @see Expedition#createColonie()
+     * @see Expedition#algoFavoriteFirst(int, Ressource)
+     * @see Expedition#algoBestPerfSUR(int, int, Ressource)
+     * @see Expedition#affectation(int)
+     * @see Expedition#Importation(String)
+     * @see Expedition#save(String, int)
+     *
+     */
     private final List<Colonie> colonies;
+
+    /**
+     * Liste des Ressources
+     *
+     * @see Expedition#Expedition()
+     * @see Expedition#Expedition(List)
+     * @see Expedition#createRessource()
+     * @see Expedition#algoFavoriteFirst(int, Ressource)
+     * @see Expedition#algoBestPerfSUR(int, int, Ressource)
+     * @see Expedition#affectation(int)
+     * @see Expedition#Importation(String)
+     *
+     */
     private final List<Ressource> ressources;
 
+    /**
+     * Constructeur d'Expedition.
+     *
+     * @see Main#main(String[])
+     *
+     */
     Expedition()
     {
         colonies = new ArrayList<Colonie>();
         ressources = new ArrayList<>();
     }
 
+    /**
+     * Constructeur d'Expedition via une liste de Colonie.
+     *
+     * @param colonies
+     * Liste de Colonie.
+     *
+     */
     Expedition(List<Colonie> colonies)
     {
         this.colonies=colonies;
         ressources = new ArrayList<>();
     }
 
-
-
+    /**
+     * Retourne une colonie a l'index donné.
+     *
+     * @param index
+     * Indexe de la colonie.
+     *
+     * @return
+     * Retourne une colonie a l'index donné.
+     *
+     * @see Menu#afficherMenuCreationColonie()
+     * @see Menu#afficherMenuConfiguration(int)
+     * @see Menu#afficherMenuAffectation(int, int)
+     * @see Main#main(String[])
+     *
+     */
     public Colonie getColonie(int index)
     {
         return colonies.get(index);
     }
-
+    /**
+     * Cree et ajoute une nouvelle Colonie a l'expedition.
+     *
+     * @return
+     * L'indice la Colonie.
+     *
+     * @see Menu#afficherMenuCreationColonie()
+     *
+     */
     public int createColonie()
     {
         Colonie colonie = new Colonie();
@@ -48,6 +133,15 @@ public class Expedition
         return colonies.size()-1;
     }
 
+    /**
+     * Cree et ajoute une nouvelle Ressource a l'expedition.
+     *
+     * @return
+     * L'indice la Ressource.
+     *
+     * @see Menu#afficherMenuCreationRessources()
+     *
+     */
     public int createRessource()
     //TODO unitest
     {
@@ -56,7 +150,20 @@ public class Expedition
         return ressources.size()-1;
     }
 
-
+    /**
+     * Retourne les ressources associées a l'index donné.
+     *
+     * @param index
+     * Index des Ressources.
+     *
+     * @return
+     * Retourne les Ressources.
+     *
+     * @see Main#main(String[])
+     * @see Menu#afficherMenuCreationRessources()
+     * @see Menu#afficherMenuAffectation(int, int)
+     *
+     */
     public Ressource getRessource(int index)
     
     //TODO unitest
@@ -64,6 +171,25 @@ public class Expedition
         return ressources.get(index);
     }
 
+    /**
+     * Algorithme d'affectation qui donne dans un ordre stricte les ressources favorites de chaque colon.
+     * Algorithe lineaire.
+     *
+     * @param colonieN
+     * Index de la colonie.
+     *
+     * @param r
+     * Ressources a affecter.
+     *
+     * @return
+     * Le coute de l'affectation.
+     *
+     * @throws Exception
+     * Nombre de colonies different du nombrede ressources.
+     *
+     * @see Expedition#algoBestPerfSUPER(Ressource)
+     *
+     */
     public int algoFavoriteFirst(int colonieN, Ressource r) throws Exception
     {
         Colonie colonie = colonies.get(colonieN);
@@ -86,18 +212,48 @@ public class Expedition
             }
         }
 
+        while(r.Depile()!=null);
+        while(r.Repile()!=null);
         return colonie.cout();
     }
 
+    /**
+     * Algorithme d'affectation naif, il utilise le resultat d'une affectation par preference et fait des substitution d'objet pour optimiser le cout.
+     * Cet algorithme ne garanti pas un meilleur cout mais il essaie avec un nombre de tentative donné.
+     *
+     * @param maxTentatives
+     * Nombre de tentatives.
+     *
+     * @param colonieN
+     * Index de la colonie.
+     *
+     * @param r
+     * Ressrouces a affecter.
+     *
+     * @return
+     * retourne le cout de l'affectation.
+     *
+     * @throws Exception
+     * Erreur lors de l'echange ou le calcul du cout.
+     *
+     * @see Expedition#affectation(int)
+     * @see Conquest.Menus.Menu#afficherMenuAffectation(int, int)
+     *
+     */
     public int algoBestPerfSUR(int maxTentatives,int colonieN, Ressource r) throws Exception
     {
         //TODO Debug
-        //Colon A (Ressource allouée : 1), Préférences : [1, 2, 3, 4], Ennemis : {B} et n'est jaloux de personne
-        //Colon B (Ressource allouée : 1), Préférences : [1, 3, 2, 4], Ennemis : {A, C, D} et n'est jaloux de personne
-        //Colon C (Ressource allouée : 3), Préférences : [3, 2, 1, 4], Ennemis : {B} et n'est jaloux de personne
-        //Colon D (Ressource allouée : 1), Préférences : [1, 4, 2, 3], Ennemis : {B} et n'est jaloux de personne
+
         Colonie colonie = colonies.get(colonieN);
-        int cout1 = algoFavoriteFirst(colonieN, r);
+        int cout1=Integer.MAX_VALUE;
+        try
+        {
+            algoFavoriteFirst(colonieN, r);
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 1;
+        }
         int cout2;
         int i=0;
 
@@ -105,21 +261,28 @@ public class Expedition
         {
             Random generator = new Random();
             int randomIndex1 = generator.nextInt(colonie.getColons().size());
-            int randomIndex2 = generator.nextInt(colonie.getColons().size());
+            int randomIndex2;
+            do {
+                randomIndex2 = generator.nextInt(colonie.getColons().size());
+            } while (randomIndex2 == randomIndex1);
+
             Colon colon1 = colonie.getColons().get(randomIndex1);
             Colon colon2 = colonie.getColons().get(randomIndex2);
 
             colonie.echangerRessources(colon1, colon2);
             cout2=colonie.cout();
 
-            if(cout1>cout2) //Cancel trade
+            if(cout1<cout2) //Cancel trade
             {
                 colonie.echangerRessources(colon2,colon1);
             }
+            cout1=cout2;
             i++;
         }
+
         return colonie.cout();
     }
+
 
     public int algoBestPerfSUPER(Ressource r)
     //TODO return le cout avec calculCout()
@@ -127,6 +290,21 @@ public class Expedition
         return 0;
     }
 
+    /**
+     * Affecte les ressources aux colons d'une colonie avec le meilleur algorithme disponible.
+     *
+     * @param colonieIndex
+     * Index de la colonie.
+     *
+     * @return
+     * retourne le cout de l'affectation.
+     *
+     * @throws Exception
+     * Erreures liés a l'affectation.
+     *
+     * @see MenuLoadTXT#afficherMenuConfigurationLoadTXT()
+     *
+     */
     public int affectation(int colonieIndex) throws Exception
     // simuler le partage des ressources entre colons
     {
@@ -137,6 +315,21 @@ public class Expedition
         return algoBestPerfSUR(maxTentatives, colonieIndex, ressource);
     }
 
+    /**
+     * Importe une colonie depuis un fichier et l'ajoute a l'expedition.
+     *
+     * @param path
+     * Chemin du fichier
+     *
+     * @return
+     * 0 si c'est un success.
+     *
+     * @throws Exception
+     * Erreur de creation.
+     *
+     * @see Main#main(String[])
+     *
+     */
     public int Importation(String path) throws Exception
     {
         List<String> keyClasses = Arrays.asList("colon","ressource","deteste","preferences");
@@ -211,6 +404,21 @@ public class Expedition
         return 0;
     }
 
+    /**
+     * Savuegarde une solution d'une colonie donnée de l'expedition dans le dossier SolutionSave avec le nom donné.
+     *
+     * @param nomFichier
+     * Nom du fichier sauvegarde.
+     *
+     * @param colonieIndex
+     * Index de la colonie a sauvegarder.
+     *
+     * @return
+     * Retourne le chemin du fichier sauvegardé.
+     *
+     * @see MenuLoadTXT#afficherMenuConfigurationLoadTXT()
+     *
+     */
     public String save(String nomFichier, int colonieIndex)
     {
         // Folder

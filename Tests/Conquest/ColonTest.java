@@ -163,7 +163,7 @@ public class ColonTest
             listcolons.add(colon7);
             colon1.ajouterRelations(listcolons);
 
-            Assertions.assertEquals(colon1.getRelationsDetestables().containsAll(listcolons),true);
+            Assertions.assertTrue(colon1.getRelationsDetestables().containsAll(listcolons));
 
         }
     }

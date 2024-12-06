@@ -5,18 +5,51 @@ JAVA 17
 
 Damien:
 
-Laissez les Test dans le main c'est plus rapide et simple pour compiler. Faudra juste pas oublier a la fin de les mettre dans un dossier a eux.
-Le cout on avait dit dans Conquest.Expedition mais a voir si c'est pertinant.
 
-Conquest.Menus devrait juste contenir de quoi appeller Conquest.Menus.Menu1 ou Conquest.Menus.Menu2 ou Conquest.Menus.MenuLoadTXT.
+CASSER MENU 2
 
-Suivre l'UML.
+B A
+B C
+B D
 
-Conquest.Struct.Colon a la liste destes[REFRACTOR TOTAL] {DONE}
+A 1 2 3 4
+B 1 3 2 4
+C 3 2 1 4
+D 1 4 2 3
 
-Colon&Colonie done, cout() to fix ONLY
 
-Algo to Implement in Conquest.Expedition.
+/**
+ * Descritption
+ *
+ *
+ * @params nomparam
+ * description
+ *
+ * @param nomparam
+ * description
+ *
+ * @throws nomthrowed
+ * descrption
+ *
+ * @return description
+ *
+ * @see Conquest.Expedition
+ * @see Conquest.Expedition#getRessource(int)
+ *
+ * @author Devasenaradjounayagar Damien
+ *
+ * @version 1.0
+ *
+ */
+
+Voir orthographe
+ajouter authour
+
+Reparer l'algo 2
+Faire les derniers Unit Test.
+Finir les exceptions.
+Faire la Javadoc.
+Faire JavaFX.
 
 Youcef:
 -corriger les bug dans colonie
