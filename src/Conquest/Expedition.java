@@ -428,7 +428,7 @@ public class Expedition
         // Ensure the folder exists
         if (!folder.exists()) {
             if (!folder.mkdir()) {
-                System.out.println("Failed to create directory: " + folderName);
+                System.out.println("Echec lors de la creation du fichier: " + folderName);
             }
         }
 
@@ -438,12 +438,12 @@ public class Expedition
         // Create File
         try {
             if (saveFile.createNewFile()) {
-                System.out.println("File created: " + saveFile.getName());
+                System.out.println("Fichier crée: " + saveFile.getName());
             } else {
-                System.out.println("File already exists.");
+                System.out.println("Le fichier existe deja.");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred while creating the file.");
+            System.out.println("Il Y a eu une erreur lors de la creation du fichier.");
         }
 
         // Write to file
@@ -453,9 +453,9 @@ public class Expedition
                 writer.newLine();
             }
             writer.write("\nCout: " + colonies.get(colonieIndex).cout());
-            System.out.println("File written successfully.");
+            System.out.println("Ecriture reussie.");
         } catch (IOException e) {
-            System.err.println("An error occurred while writing to the file: " + e.getMessage());
+            System.err.println("Il y a eu une erreur lors de l'ecriture du fichier: " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

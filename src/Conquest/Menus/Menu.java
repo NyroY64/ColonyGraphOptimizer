@@ -10,7 +10,32 @@ import Conquest.Struct.Ressource;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Classe Menu
+ * <p>
+ * Cette classe sert de Menu pour lancer le code sans argument.
+ * <p>
+ * Il nous permet de creer des colonies et leur affecter des reesources.
+ * <p>
+ * On ajoute d'abbord les colons puis les ressources disponibles.
+ * <p>
+ * 1) Ajouter une relation entre deux colons
+ * 2) Ajouter les préférences d’un colon
+ * 3) Fin
+ * <p>
+ * Une fois les relation ajouté et les preferences faites, si tout est conforme un solution est proposé et un nouveau menu est accessible.
+ * <p>
+ *  1) Échanger les ressources de deux colons
+ *  2) Afficher le nombre de colons jaloux(Cout)
+ *  3) Fin
+ *
+ * @see Conquest.Main#main(String[])
+ *
+ * @author Devasenaradjounayagar Damien
+ *
+ * @version 1.0
+ *
+ */
 public class Menu
 {
     private Expedition expedition;
