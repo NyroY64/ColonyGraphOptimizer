@@ -107,9 +107,9 @@ public class Menu
         while (enCours)
         {
             System.out.println();
-            System.out.println("1) Ajouter une relation entre deux colons");
-            System.out.println("2) Ajouter les préférences d’un colon");
-            System.out.println("3) Fin");
+            System.out.println("1/) Ajouter une relation entre deux colons");
+            System.out.println("2/) Ajouter les préférences d’un colon");
+            System.out.println("3/) Fin");
             System.out.println();
 
             int choix;
@@ -209,9 +209,9 @@ public class Menu
         boolean enCours = true;
         while (enCours) {
             System.out.println();
-            System.out.println("1) Échanger les ressources de deux colons");
-            System.out.println("2) Afficher le nombre de colons jaloux");
-            System.out.println("3) Fin");
+            System.out.println("1/) Échanger les ressources de deux colons");
+            System.out.println("2/) Afficher le nombre de colons jaloux");
+            System.out.println("3/) Fin");
             System.out.println();
 
             int choix;

@@ -58,6 +58,7 @@ public class Expedition
 
 
     public Ressource getRessource(int index)
+    
     //TODO unitest
     {
         return ressources.get(index);
@@ -74,9 +75,12 @@ public class Expedition
         {
             for(int i=0;i<colon.getPreferences().size();i++)
             {
+
+                //Verifie si la ressource i du colon est dans disponible
                 if(r.contains(colon.getPreferenceAT(i)))
                 {
                     colon.affectationRessource(colon.getPreferenceAT(i));
+                    r.removeRessource(colon.getPreferenceAT(i));
                     break;
                 }
             }
