@@ -191,6 +191,7 @@ public class Expedition
      *
      */
     public int algoFavoriteFirst(int colonieN, Ressource r) throws Exception
+    //TODO check mais Normalement ca marche
     {
         Colonie colonie = colonies.get(colonieN);
         if (colonie.getColons().size() != r.size())
