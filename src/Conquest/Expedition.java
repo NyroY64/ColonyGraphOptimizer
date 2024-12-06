@@ -326,7 +326,7 @@ public class Expedition
      * 0 si c'est un success.
      *
      * @throws Exception
-     * Erreur de creation.
+     * Erreur de lecture du fichier.
      *
      * @see Main#main(String[])
      *
@@ -337,6 +337,11 @@ public class Expedition
         List<String> linesOfFiles = Files.readAllLines(Paths.get(path));
         Colonie newColonie = new Colonie();
         Ressource newRessource = new Ressource();
+
+        //Checks
+        int colonCount = 0;
+        int ressourceCount = 0;
+        int detesteCount = 0;
 
         //REGEX
         String colonRegex = "^colon\\(([a-z0-9_]+)\\).$";
@@ -358,6 +363,9 @@ public class Expedition
 
             if(linesOfFiles.get(i).startsWith(keyClasses.get(0)))
             {
+                if(linesOfFiles.get(i).contains(","))
+                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]"); //TODO Creer et rename
+
                 Matcher matcher = colonPatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
                     newColonie.ajouterColon(new Colon(matcher.group(1)));
@@ -366,6 +374,8 @@ public class Expedition
             // Ressource Case
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(1)))
             {
+                if(linesOfFiles.get(i).contains(","))
+                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]"); //TODO Creer et rename
                 Matcher matcher = ressourcePatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
                     newRessource.addRessource(matcher.group(1));
@@ -374,6 +384,9 @@ public class Expedition
             // Hate Case
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(2)))
             {
+                if(linesOfFiles.get(i).split(",").length > 2)
+                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]"); //TODO Creer et rename
+
                 Matcher matcher = detestePatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
                 {
@@ -398,6 +411,21 @@ public class Expedition
                     }
                 }
             }
+            // Unknown case
+            else
+            {
+                throw new Exception("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne respecte pas les mots clé de debut.");//TODO nomer et ajouter l'excettion
+            }
+            if(!linesOfFiles.get(i).endsWith("."))
+            {
+                throw new Exception("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne fini pas par un '.'");// TODO nomer atjouer exception
+            }
+        }
+
+        //Checks
+        if (newColonie.getColons().size()!=newRessource.size())
+        {
+            throw new Exception("Nombre de Colon non egal au nombre de Ressources."); //TODO nomer et ajouter exception
         }
 
         colonies.add(newColonie);

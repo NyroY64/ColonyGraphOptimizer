@@ -229,9 +229,9 @@ public class Menu
         while (enCours)
         {
             System.out.println();
-            System.out.println("1/) Ajouter une relation entre deux colons");
-            System.out.println("2/) Ajouter les préférences d’un colon");
-            System.out.println("3/) Fin");
+            System.out.println("1) Ajouter une relation entre deux colons");
+            System.out.println("2) Ajouter les préférences d’un colon");
+            System.out.println("3) Fin");
             System.out.println();
 
             int choix;
@@ -289,24 +289,40 @@ public class Menu
                         colon = colonie.getColonObjet(nom);
                     } catch (ColonInexistantException e)
                     {
-                        throw new RuntimeException(e);
+                        System.out.println(e.getMessage());
+                        break;
                     }
 
-                    for (int i = 1; i < parts.length; i++) {
+                    for (int i = 1; i < parts.length; i++)
+                    {
+                        try
+                        {
+                            colonie.getColonObjet(parts[i]);
+                        }
+                        catch (ColonInexistantException e)
+                        {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
                         colon.addPreference(parts[i]);
                     }
                     break;
 
                 case 3:
                     enCours = false;
+                    boolean willbreak = false;
                     for(Colon c : colonie.getColons())
                     {
                         if(c.getPreferences().size()!=n)
                         {
                             System.out.println("Attention ! "+c.getNom()+" n'a que"+c.getPreferences().size()+"/"+n);
                             enCours = true;
-                            break;
+                            willbreak = true;
                         }
+                    }
+                    if(willbreak)
+                    {
+                        break;
                     }
                     break;
                 default:

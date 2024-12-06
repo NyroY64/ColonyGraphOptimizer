@@ -57,6 +57,10 @@ Junit manquants
 
 Orthographe
 readme
+-Donner la classe qui contient le main.
+-Expliquer l'algo SUPER si on en a un
+-Expliquer qu'on a tout implementé? "• les fonctionnalités vous avez correctement implémentées, et lesquelles sont manquantes ou présentent des problèmes."
+
 Faire les derniers Unit Test.
 Finir les exceptions.
 Faire JavaFX.
