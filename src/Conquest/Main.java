@@ -6,18 +6,7 @@ import Conquest.Menus.MenuLoadTXT;
 /**
  * C'est la fonction qui permet de lancer les differents menu.
  * <p>
- * Il y a 2 modes de lancements:
- * -Sans Arguements
- *      Il va y avoir un menu pour Creer une colonie et, y affetecer leurs attributs, puis proposer une solution naive.
- *      Un autre menu va permettre de changer l'affectation d'un objet entre 2 colons et puis visualiser la colonie ainsi que le cout.
- * -Avec Arguments
- *      On ne prends que 1 argument, cet argument est le chemin du fichier texte contenant les informations de creations de colonies formalisés.
- * @params args
- * Il s'agit du chemin du fichier.
 
- * @throws Exception
- * Retourne une exception rencontré dans les Menys.
- *
  *
  * @author Devasenaradjounayagar Damien
  *
@@ -26,6 +15,22 @@ import Conquest.Menus.MenuLoadTXT;
  */
 public class Main
 {
+    /**
+     * Il y a 2 modes de lancements:
+     * <p>
+     * -Sans Arguements
+     *      Il va y avoir un menu pour Creer une colonie et, y affetecer leurs attributs, puis proposer une solution naive.
+     *      Un autre menu va permettre de changer l'affectation d'un objet entre 2 colons et puis visualiser la colonie ainsi que le cout.
+     * -Avec Arguments
+     *      On ne prends que 1 argument, cet argument est le chemin du fichier texte contenant les informations de creations de colonies formalisés.
+     *
+     * @params args
+     * Il s'agit du chemin du fichier.
+
+     * @throws Exception
+     * Retourne une exception rencontré dans les Menys.
+     *
+     */
     public static void main(String[] args) throws Exception
     {
         Expedition expedition = new Expedition();
@@ -52,7 +57,7 @@ public class Main
         }
         else
         {
-            throw new Exception("Too much arguments");
+            throw new Exception("Trop d'arguments.");
         }
     }
 }

@@ -38,10 +38,52 @@ import java.util.Scanner;
  */
 public class Menu
 {
-    private Expedition expedition;
-    private Scanner scanner;
+    /**
+     * L'Expedition que le Menu exploitera.
+     *
+     * @see Menu#Menu(Expedition)
+     * @see Menu#getExpedition()
+     * @see Menu#afficherMenuCreationColonie()
+     * @see Menu#afficherMenuCreationRessources()
+     * @see Menu#afficherMenuConfiguration(int)
+     * @see Menu#afficherMenuAffectation(int, int)
+     *
+     */
+    private final Expedition expedition;
+
+    /**
+     * Le Scanner qu'utilisera le menu.
+     *
+     * @see Menu#Menu(Expedition)
+     * @see Menu#getScanner()
+     * @see Menu#afficherMenuCreationColonie()
+     * @see Menu#afficherMenuCreationRessources()
+     * @see Menu#afficherMenuConfiguration(int)
+     * @see Menu#afficherMenuAffectation(int, int)
+     *
+     */
+    private final Scanner scanner;
+    /**
+     * Nombre constant de Colons&Ressources.
+     *
+     * @see Menu#Menu(Expedition)
+     * @see Menu#afficherMenuCreationColonie()
+     * @see Menu#afficherMenuCreationRessources()
+     * @see Menu#afficherMenuConfiguration(int)
+     *
+     */
     private int n;
 
+    /**
+     * Constructeur de Menu.
+     *
+     * @param expedition
+     * L'expedition a suivre.
+     *
+     * @see MenuLoadTXT
+     * @see Conquest.Main#main(String[])
+     *
+     */
     public Menu(Expedition expedition)
     {
         this.scanner = new Scanner(System.in);
@@ -49,17 +91,46 @@ public class Menu
         this.n = 0;
     }
 
+    /**
+     * Recupere l'Expedition
+     *
+     * @return
+     * Retourne l'expedition.
+     *
+     * @see MenuLoadTXT#afficherMenuAffectation(int, int)
+     */
     public Expedition getExpedition()
     {
         return expedition;
     }
 
+    /**
+     * Recupere le Scanner.
+     *
+     * @return
+     * Retourne le Scanner.
+     *
+     * @see MenuLoadTXT#afficherMenuAffectation(int, int)
+     *
+     */
     public Scanner getScanner()
     {
         return scanner;
     }
 
-    public int afficherMenuCreationColonie() throws Exception
+    /**
+     * Menu de creation d'une Colonie.
+     * <p>
+     * On recupere le nombre de colons, qui par la meme occasion sera le nombre de ressources a allouer pour plus tard, puis on les crée.
+     *
+     *
+     * @return
+     * L'index de la colonie crée dans l'Expedition.
+     *
+     * @see Conquest.Main#main(String[])
+     *
+     */
+    public int afficherMenuCreationColonie()
     {
         int colonieIndex = expedition.createColonie();
         Colonie colonie = expedition.getColonie(colonieIndex);
@@ -101,7 +172,18 @@ public class Menu
         return colonieIndex;
     }
 
-    public int afficherMenuCreationRessources() throws Exception
+    /**
+     * Menu de creation d'une Colonie.
+     * <p>
+     * On recupere le nom des ressources.
+     *
+     * @return
+     * L'index des Ressources crée dans l'Expedition.
+     *
+     * @see Conquest.Main#main(String[])
+     *
+     */
+    public int afficherMenuCreationRessources()
     {
         int ressourceIndex = expedition.createRessource();
         Ressource ressources = expedition.getRessource(ressourceIndex);
@@ -113,17 +195,32 @@ public class Menu
                 String ressource = scanner.nextLine();
 
                 if(ressources.contains(ressource)){
-                    throw new RessourceDejaExistatneException("cette ressource "+ ressource +"a deja etais ajouter !");
+                    System.out.println("Cette ressource "+ ressource +"a deja ete ajoutée !");
+                    i--;
+                    continue;
                 }
 
                 ressources.addRessource(ressource);
-                
-               
+
             }
             return ressourceIndex;
     }
 
-    public void afficherMenuConfiguration(int colonieIndex) throws Exception
+    /**
+     * Menu de Configuration de la colonie.
+     * <p>
+     *     1/) Ajouter une relation entre deux colons (ex : A B)
+     *     2/) Ajouter les préférences d’un colon (ex : A 1 2 3)
+     *     3/) Fin
+     * L'index des Ressources crée dans l'Expedition.
+     *
+     * @param colonieIndex
+     * Index de la colonie de l'Expedition à utiliser.
+     *
+     * @see Conquest.Main#main(String[])
+     *
+     */
+    public void afficherMenuConfiguration(int colonieIndex)
     {
         Colonie colonie = expedition.getColonie(colonieIndex);
 
@@ -219,7 +316,25 @@ public class Menu
 
     }
 
-    
+    /**
+     * Menu de Resultat et de changement d'affectations des Resources.
+     *
+     * 1/) Échanger les ressources de deux colons
+     * 2/) Afficher le nombre de colons jaloux
+     * 3/) Fin
+     *
+     * @param colonieIndex
+     * Index de la Colonie a utiliser dans l'Expedition.
+     *
+     * @param ressourceIndex
+     * Index des Ressources a utiliser dans l'Expedition.
+     *
+     * @throws Exception
+     * Si il y a un probleme avec le calcul du cout ou l'algorithme de try,
+     *
+     * @see Conquest.Main#main(String[])
+     *
+     */
     public void afficherMenuAffectation(int colonieIndex, int ressourceIndex) throws Exception
     {
         Colonie colonie = expedition.getColonie(colonieIndex);

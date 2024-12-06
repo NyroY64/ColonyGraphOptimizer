@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 /**
  * Classe MenuLoadTXT
- *
+ * <p>
  * Cette classe sert de Menu specifique au lancement via un fichier en argument.
- *
+ * <p>
  * 1) Resolution automatique
  * 2) Sauvegarde de la solution actuelle
  * 3) Fin
@@ -22,12 +22,29 @@ import java.util.Scanner;
  */
 public class MenuLoadTXT extends Menu
 {
+    /**
+     * Constructeur de MenuLoadTXT
+     * @param expedition
+     * L'expedition a gerer.
+     *
+     * @see Conquest.Main#main(String[])
+     *
+     */
     public MenuLoadTXT(Expedition expedition)
     {
         super(expedition);
     }
 
-    public void afficherMenuConfigurationLoadTXT() throws Exception
+    /**
+     * Menu pour le lancement avec un fichier en argument.
+     * <p>
+     * 1) Resolution automatique
+     * 2) Sauvegarde de la solution actuelle
+     * 3) Fin
+     *
+     * @see Conquest.Main#main(String[])
+     */
+    public void afficherMenuConfigurationLoadTXT()
     {
         Scanner scanner = super.getScanner();
         Expedition expedition = super.getExpedition();
@@ -36,27 +53,41 @@ public class MenuLoadTXT extends Menu
         boolean enCours = true;
         while (enCours)
         {
+            System.out.print("\nVoici la colonie : ");
+            System.out.println(expedition.getColonie(0).toString());
+
             System.out.println("1) Resolution automatique");
             System.out.println("2) Sauvegarde de la solution actuelle");
             System.out.println("3) Fin");
-            int choix = scanner.nextInt();
-            scanner.nextLine();  // Consomme le saut de ligne
-
-            switch (choix)
+            try
             {
-                case 1:
-                    System.out.println("Cout de la solution: "+expedition.affectation(0)+"\n");
-                    break;
-                case 2:
-                    String nomFichier = scanner.nextLine();
-                    System.out.println("Solution actuelle sauvegardé: "+expedition.save(nomFichier,0));
-                    System.out.println("L'ecriture sous un nom de fichier deja existant ecrasera l'ancien nom.");
-                    break;
-                case 3:
-                    enCours = false;
-                    break;
-                default:
-                    System.out.println("Option invalide. Réessayez.");
+                System.out.print("Veuillez entrer votre choix : ");
+                int choix = scanner.nextInt();
+                scanner.nextLine();  // Consomme le saut de ligne
+
+                switch (choix)
+                {
+                    case 1:
+                        System.out.println("\nResolution automatique-");
+                        System.out.println("Cout de la solution: " + expedition.affectation(0) + "\n");
+                        break;
+                    case 2:
+                        System.out.println("L'ecriture sous un nom de fichier deja existant ecrasera l'ancien nom.");
+                        System.out.println("\nEntrez le nom du fichier a creer.(Si vous voulez une extension incluez la.)");
+                        String nomFichier = scanner.nextLine();
+                        System.out.println("Solution actuelle sauvegardé: " + expedition.save(nomFichier, 0));
+
+                        break;
+                    case 3:
+                        enCours = false;
+                        break;
+                    default:
+                        System.out.println("Option invalide. Réessayez.");
+                }
+            }catch (Exception e)
+            {
+                System.out.println("Option invalide. Réessayez.");
+                scanner.nextLine();
             }
         }
     }
