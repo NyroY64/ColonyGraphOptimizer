@@ -91,10 +91,10 @@ public class Colonie
     }
 
     /**
-     * Ajoute eun colon a la colonie.
+     * Ajouter un colon a la colonie.
      *
      * @param currentColon
-     * Le colon a ajouter a la colonie.
+     * Le colon à ajouter à la colonie.
      *
      * @throws Exception
      * Le colon n'existe pas.
@@ -260,7 +260,7 @@ public class Colonie
      * Le cout d'une colonie.
      * 
      * @throws Exception
-     * Ressource non attribué.
+     * Ressource non attribuée.
      * 
      * @see Conquest.Expedition#algoFavoriteFirst(int, Ressource) 
      * @see Conquest.Expedition#algoBestPerfSUR(int, int, Ressource) 
@@ -278,7 +278,7 @@ public class Colonie
         {
             if (Objects.equals(colon1.getRessource(), ""))
             {
-                throw new Exception("Empty item slot");
+                throw new CaseVideException("le colon n'a pas de ressources");
             }
 
             if(!colon1.getRelationsDetestables().isEmpty())

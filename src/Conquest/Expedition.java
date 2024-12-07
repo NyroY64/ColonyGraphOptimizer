@@ -5,6 +5,7 @@ import Conquest.Menus.MenuLoadTXT;
 import Conquest.Struct.Colon;
 import Conquest.Struct.Colonie;
 import Conquest.Struct.Ressource;
+import Conquest.Exception.*;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -189,8 +190,7 @@ public class Expedition
         Colonie colonie = colonies.get(colonieN);
         if (colonie.getColons().size() != r.size())
         {
-            throw new Exception("Not enough colonies for the ressources");
-        }
+            throw new NbColonDIfferentNbRessourcesException("Not enough colonies for the ressources");        }
         for(Colon colon : colonie.getColons())
         {
             for(int i=0;i<colon.getPreferences().size();i++)
@@ -280,7 +280,7 @@ public class Expedition
 
         //Donner les favoris
         int coutreturn = algoFavoriteFirst(colonieN, r);
-        //Arranger les jalousie
+        //Arranger les jalousies
         for(Colon colon : sortedcolonie)
         {
             for(Colon colon2 : colon.getRelationsDetestables())
@@ -310,7 +310,8 @@ public class Expedition
      * retourne le cout de l'affectation.
      *
      * @throws Exception
-     * Erreures liés a l'affectation.
+     * Erreur de lecture du fichier.
+     * Erreur de creation.
      *
      * @see MenuLoadTXT#afficherMenuConfigurationLoadTXT()
      *
@@ -373,7 +374,7 @@ public class Expedition
             if(linesOfFiles.get(i).startsWith(keyClasses.get(0)))
             {
                 if(linesOfFiles.get(i).contains(","))
-                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]");
+                    throw new ToMuchArgumentsException("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]");
 
                 Matcher matcher = colonPatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
@@ -384,7 +385,7 @@ public class Expedition
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(1)))
             {
                 if(linesOfFiles.get(i).contains(","))
-                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]");
+                    throw new ToMuchArgumentsException("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]");
                 Matcher matcher = ressourcePatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
                     newRessource.addRessource(matcher.group(1));
@@ -394,7 +395,7 @@ public class Expedition
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(2)))
             {
                 if(linesOfFiles.get(i).split(",").length > 2)
-                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]");
+                    throw new ToMuchArgumentsException("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]");
 
                 Matcher matcher = detestePatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
@@ -423,18 +424,18 @@ public class Expedition
             // Unknown case
             else
             {
-                throw new Exception("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne respecte pas les mots clé de debut.");
+                throw new NonFormalismeException("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne respecte pas les mots clé de debut.");
             }
             if(!linesOfFiles.get(i).endsWith("."))
             {
-                throw new Exception("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne fini pas par un '.'");
+                throw new NonFormalismeException("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne fini pas par un '.'");
             }
         }
 
         //Checks
         if (newColonie.getColons().size()!=newRessource.size())
         {
-            throw new Exception("Nombre de Colon non egal au nombre de Ressources.");
+            throw new NbColonDIfferentNbRessourcesException("Nombre de Colon non egal au nombre de Ressources.");
         }
 
         colonies.add(newColonie);
@@ -491,9 +492,9 @@ public class Expedition
                 writer.newLine();
             }
             writer.write("\nCout: " + colonies.get(colonieIndex).cout());
-            System.out.println("Ecriture reussie.");
+            System.out.println("Ecriture réussie.");
         } catch (IOException e) {
-            System.err.println("Il y a eu une erreur lors de l'ecriture du fichier: " + e.getMessage());
+            System.err.println("Il y a eu une erreur lors de l'écriture du fichier: " + e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

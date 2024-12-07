@@ -49,25 +49,26 @@ LISTE EXHAUSTIVE
 
 -Demander les Junit pour les Menu
 
-Casser les menus DONE
-JAVADOC des menus DONE
-
 Algo2 a reparer
 AlgoSuper()
-
-Junit manquants DONE
-
-Orthographe [JAVADOC et les PRINTS]
 readme
 -Donner la classe qui contient le main.
 -Expliquer l'algo SUPER si on en a un
 -Expliquer qu'on a tout implementé? "• les fonctionnalités vous avez correctement implémentées, et lesquelles sont manquantes ou présentent des problèmes."
 
+Faire le jar ou zip final.
+
+Casser les menus DONE
+JAVADOC des menus DONE
+Junit manquants DONE
 Faire les derniers Unit Test. DONE
 Finir les exceptions. [DONE]
+Orthographe [JAVADOC et les PRINTS]
 
-Faire JavaFX.
-Faire le jar ou zip final.
+
+
+Faire JavaFX.(Abandon)
+
 
 Youcef:
 -corriger les bug dans colonie

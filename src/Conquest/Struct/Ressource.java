@@ -81,7 +81,7 @@ public class Ressource
      * Ajoute une Ressource a la structure.
      *
      * @param n
-     * La ressource a ajouter.
+     * La ressource à retirer.
      *
      * @return 0 Si c'est un success.
      *

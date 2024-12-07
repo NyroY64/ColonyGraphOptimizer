@@ -56,7 +56,7 @@ public class Colon
 	 */
 	private final String nom;
 	/**
-	 * Liste ordonné des preferences du colon
+	 * Liste ordonnée des preferences du colon
 	 *
 	 * @see Colon#Colon(String)
 	 * @see Colon#Colon(String, LinkedHashSet)
@@ -180,7 +180,7 @@ public class Colon
 	}
 
 	/**
-	 * Trouve l'indexe d'une preference.
+	 * Trouve l'index d'une preference.
 	 *
 	 * @param preference
 	 * Le nom de la preference a chercher.
@@ -206,7 +206,7 @@ public class Colon
 	}
 
 	/**
-	 * Trouve la preference a un index donné.
+	 * Trouve la preference à un index donné.
 	 *
 	 * @param n
 	 * Index de la preference.
