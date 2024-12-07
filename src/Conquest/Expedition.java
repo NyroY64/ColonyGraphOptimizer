@@ -143,7 +143,6 @@ public class Expedition
      *
      */
     public int createRessource()
-    //TODO unitest
     {
         Ressource ressource = new Ressource();
         ressources.add(ressource);
@@ -165,8 +164,6 @@ public class Expedition
      *
      */
     public Ressource getRessource(int index)
-    
-    //TODO unitest
     {
         return ressources.get(index);
     }
@@ -246,15 +243,8 @@ public class Expedition
         //TODO Debug
 
         Colonie colonie = colonies.get(colonieN);
-        int cout1=Integer.MAX_VALUE;
-        try
-        {
-            algoFavoriteFirst(colonieN, r);
-        }catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return 1;
-        }
+        //int cout1=Integer.MAX_VALUE;
+        int cout1 = algoFavoriteFirst(colonieN, r);;
         int cout2;
         int i=0;
 
@@ -273,7 +263,7 @@ public class Expedition
             colonie.echangerRessources(colon1, colon2);
             cout2=colonie.cout();
 
-            if(cout1<cout2) //Cancel trade
+            if(cout1>cout2) //Cancel trade
             {
                 colonie.echangerRessources(colon2,colon1);
             }
@@ -284,9 +274,10 @@ public class Expedition
         return colonie.cout();
     }
 
-
     public int algoBestPerfSUPER(Ressource r)
     //TODO return le cout avec calculCout()
+    //Etape 1 Trier les colons du moins de relation au plus grand
+    //Etape 2 donner les ressources en essayant de faire le moins de jaloux
     {
         return 0;
     }
@@ -396,7 +387,7 @@ public class Expedition
                 }
             }
 
-            //Preferences Case //TODO FIX
+            //Preferences Case
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(3)))
             {
                 Matcher matcher = preferencesPatern.matcher(linesOfFiles.get(i));

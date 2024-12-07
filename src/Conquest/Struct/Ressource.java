@@ -103,7 +103,7 @@ public class Ressource
      * Retire une Ressource a la structure.(Vers PileAux)
      *
      * @param n
-     * La ressource a retirer.
+     * La ressource à retirer.
      *
      * @return 0 Si c'est un success.
      *
