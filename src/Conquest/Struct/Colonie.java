@@ -382,7 +382,6 @@ public class Colonie
      * @see Conquest.Menus.Menu#afficherMenuAffectation(int, int)
      */
     public void afficherAffectations()
-    //TODO unitest
     {
         System.out.println();
         for(Colon c:colons)

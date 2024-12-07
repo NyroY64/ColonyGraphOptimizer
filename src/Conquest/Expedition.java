@@ -8,11 +8,8 @@ import Conquest.Struct.Ressource;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.io.*;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -184,11 +181,10 @@ public class Expedition
      * @throws Exception
      * Nombre de colonies different du nombrede ressources.
      *
-     * @see Expedition#algoBestPerfSUPER(Ressource)
+     * @see Expedition#algoBestPerfSUPER(int, Ressource) 
      *
      */
-    public int algoFavoriteFirst(int colonieN, Ressource r) throws Exception
-    //TODO check mais Normalement ca marche
+    public int algoFavoriteFirst(int colonieN, Ressource r) throws Exception //TODO UNIT
     {
         Colonie colonie = colonies.get(colonieN);
         if (colonie.getColons().size() != r.size())
@@ -238,10 +234,9 @@ public class Expedition
      * @see Conquest.Menus.Menu#afficherMenuAffectation(int, int)
      *
      */
-    public int algoBestPerfSUR(int maxTentatives,int colonieN, Ressource r) throws Exception
-    {
-        //TODO Debug
+    public int algoBestPerfSUR(int maxTentatives,int colonieN, Ressource r) throws Exception //TODO Debug ET TESTER
 
+    {
         Colonie colonie = colonies.get(colonieN);
         //int cout1=Integer.MAX_VALUE;
         int cout1 = algoFavoriteFirst(colonieN, r);;
@@ -274,12 +269,35 @@ public class Expedition
         return colonie.cout();
     }
 
-    public int algoBestPerfSUPER(Ressource r)
-    //TODO return le cout avec calculCout()
-    //Etape 1 Trier les colons du moins de relation au plus grand
-    //Etape 2 donner les ressources en essayant de faire le moins de jaloux
+    public int algoBestPerfSUPER(int colonieN,Ressource r) throws Exception//TODO a TESTER
     {
-        return 0;
+        //Trier les Colons du plus petit au plus grand nombre de relations
+        Colonie colonie = colonies.get(colonieN);
+        List<Colon> sortedcolonie = new ArrayList<>(colonie.getColons());
+        sortedcolonie.sort(Comparator.comparingInt(c -> c.getRelationsDetestables().size()));
+
+        //Donner les ressources en essayant de faire le moins de jaloux
+
+        //Donner les favoris
+        int coutreturn = algoFavoriteFirst(colonieN, r);
+        //Arranger les jalousie
+        for(Colon colon : sortedcolonie)
+        {
+            for(Colon colon2 : colon.getRelationsDetestables())
+            {// colon a b c d
+                colonie.echangerRessources(colon, colon2);
+                if(colonie.cout()<coutreturn)
+                {
+                    coutreturn=colonie.cout();
+                }
+                else
+                {
+                    colonie.echangerRessources(colon, colon2);
+                }
+            }
+        }
+
+        return coutreturn;
     }
 
     /**
@@ -355,7 +373,7 @@ public class Expedition
             if(linesOfFiles.get(i).startsWith(keyClasses.get(0)))
             {
                 if(linesOfFiles.get(i).contains(","))
-                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]"); //TODO Creer et rename
+                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]");
 
                 Matcher matcher = colonPatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
@@ -366,7 +384,7 @@ public class Expedition
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(1)))
             {
                 if(linesOfFiles.get(i).contains(","))
-                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]"); //TODO Creer et rename
+                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]");
                 Matcher matcher = ressourcePatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
                     newRessource.addRessource(matcher.group(1));
@@ -376,7 +394,7 @@ public class Expedition
             else if (linesOfFiles.get(i).startsWith(keyClasses.get(2)))
             {
                 if(linesOfFiles.get(i).split(",").length > 2)
-                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]"); //TODO Creer et rename
+                    throw new Exception("Trop d'arguments dans la ligne:\t["+linesOfFiles.get(i)+"]");
 
                 Matcher matcher = detestePatern.matcher(linesOfFiles.get(i));
                 if(matcher.find())
@@ -405,18 +423,18 @@ public class Expedition
             // Unknown case
             else
             {
-                throw new Exception("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne respecte pas les mots clé de debut.");//TODO nomer et ajouter l'excettion
+                throw new Exception("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne respecte pas les mots clé de debut.");
             }
             if(!linesOfFiles.get(i).endsWith("."))
             {
-                throw new Exception("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne fini pas par un '.'");// TODO nomer atjouer exception
+                throw new Exception("La ligne:\t["+linesOfFiles.get(i)+"]\n Ne fini pas par un '.'");
             }
         }
 
         //Checks
         if (newColonie.getColons().size()!=newRessource.size())
         {
-            throw new Exception("Nombre de Colon non egal au nombre de Ressources."); //TODO nomer et ajouter exception
+            throw new Exception("Nombre de Colon non egal au nombre de Ressources.");
         }
 
         colonies.add(newColonie);
