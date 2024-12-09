@@ -47,7 +47,6 @@ ajouter authour
 
 LISTE EXHAUSTIVE
 
--Demander les Junit pour les Menu
 
 Algo2 a reparer
 AlgoSuper()
@@ -63,8 +62,8 @@ JAVADOC des menus DONE
 Junit manquants DONE
 Faire les derniers Unit Test. DONE
 Finir les exceptions. [DONE]
-Orthographe [JAVADOC et les PRINTS]
-
+Orthographe [JAVADOC et les PRINTS] DONE
+Jjunit des MENU, PAS BESOIN. [DONE]
 
 
 Faire JavaFX.(Abandon)

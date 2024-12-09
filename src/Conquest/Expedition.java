@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 /**
  * Classe Expedition
- *
+ * <p>
  * Une expedition sert a gerer plusieurs Colonies et a faire des actions sur elles. Comme la creation ou la sauvegarde.
  *
  * @see Expedition#Expedition()
@@ -239,7 +239,7 @@ public class Expedition
     {
         Colonie colonie = colonies.get(colonieN);
         //int cout1=Integer.MAX_VALUE;
-        int cout1 = algoFavoriteFirst(colonieN, r);;
+        int cout1 = algoFavoriteFirst(colonieN, r);
         int cout2;
         int i=0;
 
@@ -258,13 +258,15 @@ public class Expedition
             colonie.echangerRessources(colon1, colon2);
             cout2=colonie.cout();
 
-            if(cout1>cout2) //Cancel trade
+            if(cout1<cout2) //Cancel trade
             {
                 colonie.echangerRessources(colon2,colon1);
             }
-            cout1=cout2;
+            else
+                cout1=cout2;
             i++;
         }
+
 
         return colonie.cout();
     }

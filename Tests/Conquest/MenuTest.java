@@ -6,7 +6,6 @@ import Conquest.Struct.Ressource;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -38,6 +37,12 @@ public class MenuTest
         ressource.addRessource("2");
         ressource.addRessource("3");
         ressource.addRessource("4");
+
+        //System.out.println(colonie);
+        System.out.println("cout: "+expedition.algoBestPerfSUR(100,0,ressource));
+
+        //System.out.println(colonie);
+        System.out.println("cout: "+expedition.algoBestPerfSUR(100,0,ressource));
 
         //System.out.println(colonie);
         System.out.println("cout: "+expedition.algoBestPerfSUR(100,0,ressource));
